@@ -1,0 +1,400 @@
+header{
+    display: block;
+    width:860px;
+	background: rgb(80,146,171);
+	//text-align: center;
+    height: 130px;
+    //padding: 4px;
+    box-sizing: border-box;
+    /*margin: 1px;*/
+    float: both;
+    border-radius: 5px 5px 0px 0px ;
+
+}
+.myLOGO{
+    display: block-inline;
+    float: left;
+    width:130px;
+    height: 130px;
+    /*border: 1px solid yellow;*/
+    box-sizing: border-box;
+}
+.myServer-name{
+	text-align: center;
+    display: block-inline;
+    float: left;
+    width: 600px;
+    height: 130px;
+    /*border: 1px solid yellow;*/
+    box-sizing: border-box;
+}
+header h1{
+    color: white;
+    font-family: "lucida sans", times, serif;
+    /* width: 300px; */
+    /*height: 100px;*/
+}
+body{
+        font-family: "lucida sans", times, serif;
+        float:both;
+}
+nav a{
+    display: block-inline;
+    font-family: "lucida sans", times, serif;
+   padding: 5px;
+    /*padding-top: 5px;*/
+    
+    margin-left: 15px; 
+    margin-top: 15px;
+    text-decoration: none;
+    font-size: 120%;
+    text-align: center;
+    border: 1px solid yellow;
+    color: white;
+    background-color: rgba(255, 255, 255, .3);
+    float: left;
+    border-radius: 5px;  
+    box-sizing: border-box; 
+    width: 100px;
+    height: 40px;
+    
+}
+.Left{
+    display: block-inline;
+    width: 130px;
+    height:500px;
+	background-color: rgb(166,155,198);
+    border: 1px solid transparent;
+    float: left; 
+    padding: 5px;
+    border-radius: 0px 0px 0px 5px ;
+    /*border-radius: 5px;*/
+    box-sizing: border-box; 
+}
+.global_content{
+    display: block-inline;
+    width:730px;
+    height: 600px;
+    float: left;
+    /*margin: 1px;*/
+    box-sizing: border-box; 
+}
+.modal-header{
+    display: block-inline;
+    width:730px;
+    height:35px;
+    color: white;
+    font-size: 120%;
+/*    margin:1px;*/
+/*    padding: 2px;*/
+    background-color: rgb(120,104,168);
+    box-sizing: border-box; 
+    float: both;
+}
+.MyID{
+    display: block-inline;
+    float: left;
+    height: 35px;
+    width: 300px;
+    font-size: 20x;
+    text-align: center;
+    padding:1%;
+    /*border: 1px solid yellow;*/
+    box-sizing: border-box; 
+    
+}
+.Label-User{
+    font-size: 14px;
+    font-weight: bold;
+    display: block-inline;
+    border-left: 1px solid rgb(120,104,168);
+    border-bottom: 1px solid rgb(120,104,168);
+    border-top: 1px solid rgb(120,104,168);
+    width: 77px;
+    height:21px;
+    float:left;
+    color: rgb(120,104,168);
+    background-color: white;
+    padding-top:2px;
+    padding-left:2px;
+    margin-top: 5px;
+}
+
+
+
+
+.Input-User{
+    display: block-inline;
+    font-size: 14px;    
+    width:116px;
+    height:21px;    
+    float: left;
+    border-right: 1px solid rgb(120,104,168);
+    border-bottom: 1px solid rgb(120,104,168);
+    border-top: 1px solid rgb(120,104,168);
+    margin-top: 5px;
+}
+.myUser-Button{
+    width: 99px;
+    height:25px;    
+    float: left;
+    display: block-inline;
+    margin-top: 5px;
+}
+
+.tabs-header{
+    display: block;
+    width:730px;
+    height:35px;
+    color: white;
+    font-size: 120%;
+/*    margin:1px;*/
+/*    padding: 2px;*/
+    background-color: rgb(120,104,168);
+          overflow-x: auto;
+                overflow-y: hidden;
+    box-sizing: border-box; 
+    float: both;
+}
+[class*='close-'] {
+    /*color: #777;*/
+    color: black;
+    font: 12px arial, sans-serif;
+    position: absolute;
+   /* content: 'x'; /* UTF-8 symbol */        
+    right: 1px;
+    top: 3px;
+    margin-bottom : 5px;
+    /*padding-top:-1px;*/
+    width: 13px;
+    height:15px;  
+    font-weight: bold;      
+    box-sizing: border-box;
+    
+  cursor: pointer;
+
+}
+
+.close-x:hover {
+  color:red;
+/*  background-color: red;*/
+  /*border:1px solid black;*/
+ /* border-radius: 10px;*/
+} 
+.mytab {
+    background-color: rgba(255, 255, 255, .3);
+    /*background-color: white; /* Fallback color */
+    /*background-color: rgba(0,0,0,0.5); /* Black w/ opacity */
+  color: green;
+  /*border: 1px solid transparent;*/
+  border-radius: 3px 10px 0px 0px ;
+  font-size: 11px;
+  /*text-align: center;*/
+  padding-top: 5px;
+  padding-left: 3px;
+  float: left;
+  height: 25px;
+  margin-right: 3px;
+  position: relative;
+  width: 80px;
+  top: 10px;    
+
+  box-sizing: border-box;   
+  
+}
+/*.mytab:hover{
+       background-color: rgba(255, 255, 255, .7); 
+}*/
+.mytab:hover {
+       background-color: rgba(255, 255, 255, .6); 
+}
+.mytab: focus {
+       background-color: rgba(255, 255, 255, .8); 
+}
+.mytab2 {
+       background-color: rgba(255, 255, 255, .8); 
+}
+
+
+/* The Modal (background) */
+.modal {
+    color: black;
+    text-align: left;
+    display: block-inline; /* Hidden by default */
+    /*position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 300px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width:600px; /* Full width */
+/*    height: 375px; /* Full height */
+    height: 405px; /* Full height */
+    padding-left:3px;
+    overflow-y: scroll;
+    overflow-x: hidden:
+    background-color: white; /* Fallback color */
+    background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+    /*border:1px solid rgb(120,104,168);*/
+    float: Left;
+    box-sizing: border-box;
+    word-break: break-all;
+}
+
+.Label-Msg{
+    font-size: 14px;
+    font-weight: bold;
+    display: block-inline;
+    border-left: 1px solid rgb(120,104,168);
+    border-bottom: 1px solid rgb(120,104,168);
+    border-top: 1px solid rgb(120,104,168);
+    width: 80px;
+    height:25px;
+    float:left;
+    color: rgb(120,104,168);
+    background-color: white;
+    padding :2px;
+    box-sizing: border-box; 
+}
+
+
+
+.myButton{
+    width: 100px;
+    display: block-inline;
+    height : 25px;
+}
+
+.Input-Msg{
+    display: block-inline;
+    width:420px;
+    float: left;
+    font-size: 14px;    
+    height:25px;    
+    border-right: 1px solid rgb(120,104,168);
+    border-bottom: 1px solid rgb(120,104,168);
+    border-top: 1px solid rgb(120,104,168);
+    box-sizing: border-box;     
+}
+
+.myUsers{
+    
+    font-size: 14px;
+    font-weight: bold;
+    display: block-inline;
+    border-left: 1px solid rgb(120,104,168);
+    border-right: 1px solid rgb(120,104,168);
+    /*border-top: 1px solid rgb(120,104,168);*/
+    width: 130px;
+    height:25px;
+    float:left;
+    color: rgb(120,104,168);
+    background-color:rgba(0,0,0,0.2);;
+    box-sizing: border-box;     
+}
+
+.online-box{
+    font-size: 11px;    
+    color: black;
+    text-align: left;
+    display: block-inline; /* Hidden by default */
+    /*position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    width:130px; /* Full width */
+    height: 380px; /* Full height */
+    //overflow: auto; /* Enable scroll if needed */
+    
+    /*padding-left:5px;*/
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: white; /* Fallback color */
+    background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
+    border-left: 1px solid rgb(120,104,168);
+    border-bottom: 1px solid rgb(120,104,168);
+    border-right: 1px solid rgb(120,104,168);
+    box-sizing: border-box;     
+    
+}
+
+
+
+
+.Right{
+    display: block-inline;
+    width: 130px;
+    height:500px;
+	background-color: rgb(166,155,198);
+    border: 1px solid transparent;
+    float: left; 
+    padding: 5px;
+    /*border-radius: 5px;*/
+    box-sizing: border-box; 
+}
+
+.username{
+    color:blue;
+}
+
+.systemMsg{
+    color:red;
+}
+
+.userMsg{
+    color:green;
+}
+
+
+.user_on {
+    color : black;
+    white-space: nowrap;
+    width:105px;
+    height:20px;
+    padding: 2px;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+}
+
+.user_on:hover {
+    background-color: rgba(166,155,198,0.5); /* Black w/ opacity */
+   /* color : red;*/
+}
+
+.user_container {
+    /*position: relative;*/
+    display: inline-block;
+}
+
+.option_user_container {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 105px;
+    /*overflow: auto;*/
+    /*box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);*/
+
+    margin-top: -20px;
+    margin-left:20px;
+}
+
+.option_user_container div {
+    color: black;
+   /*top: -5px;*/
+    padding-top: 5px ;
+    padding-left: 5px ;
+    padding-bottom: 5px;
+    text-decoration: none;
+    display: block;
+}
+
+.option_user_container div:hover  {
+    background-color: rgb(80,146,171);
+}
+
+.show {
+    display:block;
+}
+
+
+
+
+
