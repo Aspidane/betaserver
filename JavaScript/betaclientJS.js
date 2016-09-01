@@ -10,7 +10,7 @@ var username="0";
 var users = [];
  
 //Connect to the server via socket.io
-var socket = io('http://localhost');
+var socket = io();
 
 
 var btnadd_me = document.getElementById('add_me');   
