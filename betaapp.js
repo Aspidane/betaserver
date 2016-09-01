@@ -14,7 +14,7 @@ var chatRooms=[];
 chatRooms.push({name: "general", users:[], password:"" });
 
 //Listen on port 80
-app.listen(3000);
+app.listen(process.env.PORT);
 
 function handler(req, res) {
     //If they request the css
