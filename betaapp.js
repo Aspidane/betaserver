@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 console.log("Starting Server");
 
 var app = require('http').createServer(handler)
@@ -470,4 +469,3 @@ io.on('connection', function (socket){
 }); // END  io.on('connection', function (socket){
 /*---------------------------------------------------------------------------------*/
 
->>>>>>> dfab9c31a16606c80e0268fd6bfb8d9998126dbf
