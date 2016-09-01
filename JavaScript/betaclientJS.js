@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 "use strict";
     
 var max_valor_msg=300;
