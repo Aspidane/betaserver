@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "name": "betaserver",
   "version": "1.0.0",
@@ -22,4 +23,30 @@
     "socket.io"
   ],
   "license": "Apache"
+=======
+{
+  "name": "betaserver",
+  "version": "1.0.0",
+  "description": "BETA version of a simple Node.js chat server using socket.io",
+  "engines": {
+    "node": "4.4.7"
+  },
+  "main": "betaapp.js",
+  "scripts": {
+    "start": "node betaapp.js"
+  },
+  "dependencies": {
+	"socket.io": "1.4.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aspidane/betaserver"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "socket.io"
+  ],
+  "license": "Apache"
+>>>>>>> dfab9c31a16606c80e0268fd6bfb8d9998126dbf
 }
