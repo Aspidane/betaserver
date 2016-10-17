@@ -1,12 +1,11 @@
 <!DOCTYPE html>
+<!--  Online version OCt/17  -->
 <html lang="en">
 <header>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link href="CSS/betaclient.css" rel="stylesheet" type="text/css">  
-<!-- 	<script type="text/javascript" src="JavaScript/test.js"></script> -->
 	<script src="../../socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="JavaScript/betaclientJS.js"></script>
-    
 	<aside class="myLOGO">
   	<!-- LOGO -->	 
   	<p>LOGO</p>
@@ -21,28 +20,35 @@
 	</nav>    
 </header>
 <body>
-	<aside class = "Left">
-    	<p> Some text on the left
-    	</p>
+	<aside class = "Left" id="chatrooms">
+    	<span id="myChatRooms">Chat-Rooms</span>
 	</aside>
 	<aside class="global_content">
     	<!-- The Chat HEADER -->
     	<aside class="modal-header">
         	<aside id="WuserID" class="MyID">Welcome User!</aside>
         	<!--Update username form-->
-             <form onsubmit="return false;">
-                    <label class="Label-User">Username: </label>
-                    <input type="text" id="userid" class="Input-User" ></input>
-                     <button id="nameBtn" class="myUser-Button" onclick="updateName()">UPDATE</button>   
-             </form>  
-            <!--  temporal button  REMOVE!!!-->
-            <form action="/" method="post">
-                <button type="button" id="add_me" onclick="btn_add_me_Click()">Agregar</button>
-            </form>
+         	<form onsubmit="return false;">
+                	<label class="Label-User">Username: </label>
+                	<input type="text" id="userid" class="Input-User" ></input>
+                 	<button id="nameBtn" class="myUser-Button" onclick="updateName()">UPDATE</button>   
+         	</form>  
+        	<!--For debugging; adds tabs-->
+        	<!--<form action="/" method="post">-->
+   			 <!--<button type="button" id="add_me" onclick="btn_add_me_Click()">Agregar</button>-->
+        	</form>
     	</aside>
-        <aside class="tabs-header">
+        <aside class="tabs-header" id="tab_bar">
+            <div id=leftTabButtons class="leftTabs hidden_tab" >
+                <button id="leftTab" onclick="showLeftMostTabs()"> << </button>
+                <button id="leftMostTabs" onclick="showLeftTab()"> <</button>
+            </div>
             <aside id="tab_holder" class="mytab_holder"></aside>
-        </aside>
+            <div id=rightTabButtons class="rightTabs hidden_tab">
+                <button id="rightTab"  onclick="showRightTab()"> ></button>
+                <button id="rightMostTabs" onclick="showRightMostTabs()">>></button>
+            </div>
+    	</aside>        
     	<!-- The Modal -->
     	<div id="myModal" class="modal"></div>   
     	<!-- Users box -->    	 
@@ -52,10 +58,10 @@
     	</aside>
     	<!-- Users box -->    	 
     	<!--<form onkeypress="captureEnter(key, other)">-->
-        <form onsubmit="return false;">
+    	<form onsubmit="return false;">
         	<label class="Label-Msg">Message: </label>
         	<input type="text" id="userMessage"  class="Input-Msg"></input>
-            <button id="myBtn" class="myButton" onclick="sendMessage()">SEND</button>
+        	<button id="myBtn" class="myButton" onclick="sendMessage()">SEND</button>
     	</form>
 	</aside>
 
@@ -63,6 +69,7 @@
 	<div>	No tengo idea </div>
 	</footer> 	-->
 </body>
-</html> 
+</html>
+
 
 
