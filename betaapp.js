@@ -3,6 +3,7 @@ console.log("Starting Server");
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
+var validator = require('validator');
 
 var users=[];       //List of users
 var socketIDs=[];   
@@ -38,6 +39,21 @@ function handler(req, res) {
             	res.end(cssData);
         	}
    	});
+	//If they request the anchorme javascript file
+	} else if(req.url.indexOf("anchorme.")>-1){
+    	console.log("JavaScript requested");
+    	//Read it to them
+    	fs.readFile(__dirname + '/JavaScript/anchorme.min.js', function(jsErr, jsData){
+         	//If there is an error, report it
+        	if(jsErr) {
+            	console.log("ERROR LOADING ANCHORME: "+jsErr);
+            	res.writeHead(500);
+            	res.end('Error loading anchorme.min.js');
+        	} else{
+            	res.writeHead(200);
+            	res.end(jsData);
+        	}
+    	});
 	//If they request the javascript file
 	} else if(req.url.indexOf(".js")>-1){
     	console.log("JavaScript requested");
@@ -186,42 +202,48 @@ io.on('connection', function (socket){
     	//socket.emit is for the current client only
         var t_day = my_day();
         var timestamp= my_hour();    
-    	io.to(data["room"]).emit('messageFromServer', { type:"0", sender:username, message:data["message"],time:timestamp,day:t_day, room:data["room"] });
+    	
+		var safeMessage=validator.escape(data["message"]);
+			
+    	io.to(data["room"]).emit('messageFromServer', { type:"0", sender:username, message:safeMessage, time:timestamp, day:t_day, room:data["room"] });
 	});
 	/*****************************************************/
 	//When a user changes their username
 	socket.on('newName', function(data){
     	console.log("New name attempt: "+username+" -> "+data["updatedName"]);
     	var oldUsername=username;  
+		
+		var safeName=validator.escape(data["updatedName"]);
+		
         var index=-1;//Index of the username;-1 means it is not taken
         //Search through the array looking for it
         for(var i=0;i<users.length;i++){
-            if(users[i].username==data["updatedName"]){
+            if(users[i].username==safeName){
                 index=i;//Record the location
                 break;    //And break out of the loop
             }
         }
     	if(-1==index){ //If it is not found
         	//Log that it was a success
-        	console.log("Successful: "+username+" -> "+data["updatedName"]);
+        	console.log("Successful: "+username+" -> "+safeName);
         	//Update the list of users
         	//Search for the old username
         	for(var i=0;i<users.length;i++){
             	//When it is found
             	if(username==users[i].username){
                 	//Update it
-                	users[i].username=data["updatedName"];
+                	users[i].username=safeName;
                     //must to check through all rooms as well
                     for(var k=0; k<publicRooms.length;k++){
                         var index_2=  publicRooms[k].users.indexOf(username);
                         if(index_2 >= 0 ){
-                            publicRooms[k].users[index_2]=data["updatedName"];
+                            publicRooms[k].users[index_2]=safeName;
                         }
                     }
                 	break; //And exit the loop "for i"
             	}
         	}
-        	username=data["updatedName"]; //Update the (local) username
+        	username=safeName; //Update the (local) username
         	//And send the response to the user
         	socket.emit('messageFromServer', {type:"1", result:"yes", updatedName:username} );
         	//io.sockets.emit sends a message to ALL THE USERS
@@ -229,7 +251,7 @@ io.on('connection', function (socket){
             var timestamp= my_hour();    
         	io.sockets.emit('messageFromServer', {type:"4", oldName:oldUsername, newName:username,time:timestamp, day:t_day} );
     	}else{ //If it was found, report an error
-        	console.log("Not successful: "+username+" -> "+data["updatedName"]);
+        	console.log("Not successful: "+username+" -> "+safeName);
         	//And send the response to the user
         	socket.emit('messageFromServer', {type:"1", result:"no", reason:"Name is already taken."} );
     	}
