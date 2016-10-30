@@ -4,9 +4,9 @@
 This application [is hosted on Heroku](https://betaserver.herokuapp.com/).
 
 This is a chatserver run on Node.js. Features include:
--Multiple chat rooms
--The ability to change your username
--The ability to send private messages
+- Multiple chat rooms
+- The ability to change your username
+- The ability to send private messages
 
 ## Running Locally
 
