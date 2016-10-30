@@ -116,7 +116,22 @@ function handler(req, res) {
                 res.writeHead(200);
                 res.end(backgroundData);
             }
-        });         
+        });      
+    }else if(req.url.indexOf("fb_icon.png")>-1){
+        console.log("SpookyGif2.gif requested");
+        //Read it to them
+        fs.readFile(__dirname + '/images/fb_icon.png', function(bgErr, backgroundData){
+            //If there is an error, report it
+            if(bgErr) {
+                console.log("ERROR LOADING fb_icon.png: "+bgErr);
+                res.writeHead(500);
+                res.end('Error loading fb_icon.png');
+            } else{
+                //Otherwise, send it to the client
+                res.writeHead(200);
+                res.end(backgroundData);
+            }
+        });          
 	//Default to giving them the client
 	} else { //fs.readFile(__dirname + '/../chatServerRossi/chat_index.html',
     	fs.readFile(__dirname + '/betaclient.html', function(err, data){
