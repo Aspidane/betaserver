@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<!--  Online version OCt/17  -->
+<!-- Online version Oct/30  -->
 <html lang="en">
 <header>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<link href="CSS/betaclient.css" rel="stylesheet" type="text/css">  
 	<script src="../../socket.io/socket.io.js"></script>
 	<script type="text/javascript" src="JavaScript/betaclientJS.js"></script>
+	<script type="text/javascript" src="JavaScript/anchorme.min.js"></script>
 	<aside class="myLOGO">
   	<!-- LOGO -->	 
-  	<p>LOGO</p>
+  	<!-- <p>LOGO</p> -->
 	</aside>
 	<aside id="server-name" class="myServer-name">
-    	<h1>-MY CHAT- American Server!</h1>
+    	<h1 align="center"></h1>
 	</aside>    
 	<nav>
     	<a href="login.html" class = "active">Register</a>
@@ -19,7 +20,8 @@
     	<!-- <a href="" target="_blank">Other stuff</a> -->
 	</nav>    
 </header>
-<body>
+<!-- <body onload="make_tabs()"> -->
+ <body> 
 	<aside class = "Left" id="chatrooms">
     	<span id="myChatRooms">Chat-Rooms</span>
 	</aside>
@@ -29,9 +31,10 @@
         	<aside id="WuserID" class="MyID">Welcome User!</aside>
         	<!--Update username form-->
          	<form onsubmit="return false;">
-                	<label class="Label-User">Username: </label>
+                 	<button id="nameBtn" class="myUser-Button" onclick="updateName()">UPDATE</button>               
                 	<input type="text" id="userid" class="Input-User" ></input>
-                 	<button id="nameBtn" class="myUser-Button" onclick="updateName()">UPDATE</button>   
+                	<label class="Label-User">Username: </label>                    
+
          	</form>  
         	<!--For debugging; adds tabs-->
         	<!--<form action="/" method="post">-->
@@ -40,13 +43,13 @@
     	</aside>
         <aside class="tabs-header" id="tab_bar">
             <div id=leftTabButtons class="leftTabs hidden_tab" >
-                <button id="leftTab" onclick="showLeftMostTabs()"> << </button>
-                <button id="leftMostTabs" onclick="showLeftTab()"> <</button>
+                <button id="leftTab" class = "my_left_tab_double" onclick="showLeftMostTabs()"><<</button>
+                <button id="leftMostTabs" class = "my_left_tab_single" onclick="showLeftTab()"><</button>
             </div>
             <aside id="tab_holder" class="mytab_holder"></aside>
             <div id=rightTabButtons class="rightTabs hidden_tab">
-                <button id="rightTab"  onclick="showRightTab()"> ></button>
-                <button id="rightMostTabs" onclick="showRightMostTabs()">>></button>
+                <button id="rightTab" class = "my_right_tab_single" onclick="showRightTab()">></button>
+                <button id="rightMostTabs" class = "my_right_tab_double" onclick="showRightMostTabs()">>></button>
             </div>
     	</aside>        
     	<!-- The Modal -->
@@ -63,11 +66,15 @@
         	<input type="text" id="userMessage"  class="Input-Msg"></input>
         	<button id="myBtn" class="myButton" onclick="sendMessage()">SEND</button>
     	</form>
+<!--         <aside class="my_corner">
+        </aside>   -->      
 	</aside>
-
-<!-- 	<footer>
-	<div>	No tengo idea </div>
-	</footer> 	-->
+	<footer class="my_footer">
+        <span>Aspidane Chat Server 2016 V-1.0  Licence: Apache</span><br />
+        <span>Repository HTML/Java/CSS code in <a href="https://github.com/Aspidane/chatserver" target="_blank">Aspidane/chatserver</a></span>
+        <span>Contact Address: <a texdecoration=none href="mailto:aspidane@gmail.com" >Aspidane@gmail.com</a></span>
+        <br /><span>Special thanks to: <a href="http://www.w3schools.com/default.asp" target="_blank">w3schools.com</a>, <a href="http://www.heroku.com/" target="_blank">Heroku.com</a>, and <a href="http://www.stackoverflow.com/" target="_blank">stackoverflow.com</a></span>
+	</footer> 	
 </body>
 </html>
 

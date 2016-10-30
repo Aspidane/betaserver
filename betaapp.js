@@ -1,5 +1,5 @@
 console.log("Starting Server");
-// Online version OCt/17 
+// Online version Oct/30 
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
@@ -10,11 +10,14 @@ var socketIDs=[];
 
 //Initialize an object to record what public chat rooms we have active
 var publicRooms=[];
-//By default, we have a general (0) chat and sports (1)
-publicRooms.push({name: "General", users:[]});
-publicRooms.push({name: "Sports", users:[]});
+//By default, we have these chats
+publicRooms.push({name: "Graveyard", users:[]});
+publicRooms.push({name: "Cemetary", users:[]});
+publicRooms.push({name: "Crypt", users:[]});
+publicRooms.push({name: "Mausoleum", users:[]});
+publicRooms.push({name: "Pyramid", users:[]});
 
-//Initialize array to hold data on private (password protected) rooms
+//Initialize array to hold data on private (password protected) rooms UNUSED atm
 var privateRooms=[];
 
 //Listen on port 80 or 5000
@@ -32,7 +35,7 @@ function handler(req, res) {
         	if(cssErr) {
             	console.log("ERROR LOADING CSS: "+cssErr);
             	res.writeHead(500);
-            	res.end('Error loading clientCSS.css');
+            	res.end('Error loading betaclient.css');
         	} else{
             	//Otherwise, send it to the client
             	res.writeHead(200);
@@ -63,18 +66,63 @@ function handler(req, res) {
         	if(jsErr) {
             	console.log("ERROR LOADING JAVASCRIPT: "+jsErr);
             	res.writeHead(500);
-            	res.end('Error loading test.js');
+            	res.end('Error loading betaclientJS.js');
         	} else{
             	res.writeHead(200);
             	res.end(jsData);
         	}
     	});
+	}else if(req.url.indexOf("back_moon.png")>-1){
+        console.log("background requested");
+        //Read it to them
+        fs.readFile(__dirname + '/images/back_moon.png', function(bgErr, backgroundData){
+            //If there is an error, report it
+            if(bgErr) {
+                console.log("ERROR LOADING IMAGE BACKGROUND: "+bgErr);
+                res.writeHead(500);
+                res.end('Error loading back_moon.png');
+            } else{
+                //Otherwise, send it to the client
+                res.writeHead(200);
+                res.end(backgroundData);
+            }
+        });        
+    }else if(req.url.indexOf("spookyGif.gif")>-1){
+        console.log("SpookyGif.gif requested");
+        //Read it to them
+        fs.readFile(__dirname + '/images/spookyGif.gif', function(bgErr, backgroundData){
+            //If there is an error, report it
+            if(bgErr) {
+                console.log("ERROR LOADING spookyGif.gif: "+bgErr);
+                res.writeHead(500);
+                res.end('Error loading spookyGif.gif');
+            } else{
+                //Otherwise, send it to the client
+                res.writeHead(200);
+                res.end(backgroundData);
+            }
+        });     
+    }else if(req.url.indexOf("spookyGif2.gif")>-1){
+        console.log("SpookyGif2.gif requested");
+        //Read it to them
+        fs.readFile(__dirname + '/images/spookyGif2.gif', function(bgErr, backgroundData){
+            //If there is an error, report it
+            if(bgErr) {
+                console.log("ERROR LOADING spookyGif2.gif: "+bgErr);
+                res.writeHead(500);
+                res.end('Error loading spookyGif2.gif');
+            } else{
+                //Otherwise, send it to the client
+                res.writeHead(200);
+                res.end(backgroundData);
+            }
+        });         
 	//Default to giving them the client
 	} else { //fs.readFile(__dirname + '/../chatServerRossi/chat_index.html',
     	fs.readFile(__dirname + '/betaclient.html', function(err, data){
         	if(err) {
             	res.writeHead(500);
-            	return res.end('Error loading client.html');
+            	return res.end('Error loading betaclient.html');
         	}
          	//200 is ok
         	res.writeHead(200, {'Content-Type': 'text/html; charset=ascii'});
@@ -202,73 +250,82 @@ io.on('connection', function (socket){
     	//socket.emit is for the current client only
         var t_day = my_day();
         var timestamp= my_hour();    
-    	
 		var safeMessage=validator.escape(data["message"]);
-			
     	io.to(data["room"]).emit('messageFromServer', { type:"0", sender:username, message:safeMessage, time:timestamp, day:t_day, room:data["room"] });
 	});
 	/*****************************************************/
 	//When a user changes their username
 	socket.on('newName', function(data){
     	console.log("New name attempt: "+username+" -> "+data["updatedName"]);
-    	var oldUsername=username;  
-		
-		var safeName=validator.escape(data["updatedName"]);
-		
-        var index=-1;//Index of the username;-1 means it is not taken
-        //Search through the array looking for it
-        for(var i=0;i<users.length;i++){
-            if(users[i].username==safeName){
-                index=i;//Record the location
-                break;    //And break out of the loop
-            }
-        }
-    	if(-1==index){ //If it is not found
-        	//Log that it was a success
-        	console.log("Successful: "+username+" -> "+safeName);
-        	//Update the list of users
-        	//Search for the old username
-        	for(var i=0;i<users.length;i++){
-            	//When it is found
-            	if(username==users[i].username){
-                	//Update it
-                	users[i].username=safeName;
-                    //must to check through all rooms as well
-                    for(var k=0; k<publicRooms.length;k++){
-                        var index_2=  publicRooms[k].users.indexOf(username);
-                        if(index_2 >= 0 ){
-                            publicRooms[k].users[index_2]=safeName;
-                        }
-                    }
-                	break; //And exit the loop "for i"
-            	}
-        	}
-        	username=safeName; //Update the (local) username
+		//Confirm the name meets the length requirements 15 >= length >= 3
+		//If there are any problems, deny it and tell the user
+		if(data["updatedName"].length>15 || data["updatedName"].length<3 ){
+			//Report the result
+			console.log("Not successful: "+username+" -> "+data["updatedName"]);
         	//And send the response to the user
-        	socket.emit('messageFromServer', {type:"1", result:"yes", updatedName:username} );
-        	//io.sockets.emit sends a message to ALL THE USERS
-            var t_day = my_day();
-            var timestamp= my_hour();    
-        	io.sockets.emit('messageFromServer', {type:"4", oldName:oldUsername, newName:username,time:timestamp, day:t_day} );
-    	}else{ //If it was found, report an error
-        	console.log("Not successful: "+username+" -> "+safeName);
+			socket.emit('messageFromServer', {type:"1", result:"no", reason:"Incorrect length."} );
+		//Check for unwanted characters
+		}else if( invalidCharacterCheck(data["updatedName"]) ){
+			//Report the result
+			console.log("Not successful: "+username+" -> "+data["updatedName"]);
         	//And send the response to the user
-        	socket.emit('messageFromServer', {type:"1", result:"no", reason:"Name is already taken."} );
-    	}
+			socket.emit('messageFromServer', {type:"1", result:"no", reason:"Invalid characters."} );
+		
+		//If no problems were found, continue on
+		}else{
+			//Record the current username
+			var oldUsername=username;  
+			//Escape anything that might've been missed
+			var safeName=validator.escape(data["updatedName"]);
+			
+			var index=-1;//Index of the username;-1 means it is not taken
+			//Search through the array looking for it
+			for(var i=0;i<users.length;i++){
+				if(users[i].username==safeName){
+					index=i;//Record the location
+					break;    //And break out of the loop
+				}
+			}
+			if(-1==index){ //If it is not found
+				//Log that it was a success
+				console.log("Successful: "+username+" -> "+safeName);
+				//Update the list of users
+				//Search for the old username
+				for(var i=0;i<users.length;i++){
+					//When it is found
+					if(username==users[i].username){
+						//Update it
+						users[i].username=safeName;
+						//must to check through all rooms as well
+						for(var k=0; k<publicRooms.length;k++){
+							var index_2=  publicRooms[k].users.indexOf(username);
+							if(index_2 >= 0 ){
+								publicRooms[k].users[index_2]=safeName;
+							}
+						}
+						break; //And exit the loop "for i"
+					}
+				}
+				username=safeName; //Update the (local) username
+				//And send the response to the user
+				socket.emit('messageFromServer', {type:"1", result:"yes", updatedName:username} );
+				//io.sockets.emit sends a message to ALL THE USERS
+				var t_day = my_day();
+				var timestamp= my_hour();    
+				io.sockets.emit('messageFromServer', {type:"4", oldName:oldUsername, newName:username,time:timestamp, day:t_day} );
+			}else{ //If it was found, report an error
+				console.log("Not successful: "+username+" -> "+safeName);
+				//And send the response to the user
+				socket.emit('messageFromServer', {type:"1", result:"no", reason:"Name is already taken."} );
+			}
+		}
   	});
 	/*****************************************************/
 	//When a user tries to join/create a new chat room
 	socket.on('newChatRoom', function(data){
-        //WE NEED TO UPGRADE THIS SECTION USING CHAT_KIND PARAMETER, SO THAT WAY WE CAN SEARCH FASTER
-        // BECAUSE SOME ONE COULD TRY ENTER IN A PRIVATE CHATROOM WITH A WRONG PASSWORD AND THAT MIGHT
-        //FORCE CREATE A NEW ROOM WITH SAME NAME /ETC
-        // SO IF CHAT_KIND == 1 (PUBLIC)  ELSE IS PRIVATE THEN CHECK THE PASSWORD
     	console.log("New chat room message: "+JSON.stringify(data));
-        //console.log("Existing rooms: "+getPublicRoomNames());
         //Get the data
     	var room=data["room"];
-        //var senderIndex=socketIDs.indexOf(socket.id);
-        	//Get the client's username based on the id
     	var newChatUser= data["user"];
     	var index=-1;//Initialize the index variable
         //If there is no password, we search the public rooms
@@ -345,10 +402,11 @@ io.on('connection', function (socket){
         console.log(senderIndex);
         var originator=users[senderIndex].username;
         //The object to be sent to the client
+		var safeMessage=validator.escape(data["message"]);
         var responseObject={//Contains the private message and who the  sender/receiver are
         	recipient:receiver,
         	sender:originator,
-        	message:data["message"],
+        	message:safeMessage,
             day: my_day(),
             time:my_hour()
         };        
@@ -388,7 +446,13 @@ io.on('connection', function (socket){
  
 }); // END  io.on('connection', function (socket){
 /*---------------------------------------------------------------------------------*/
-
+//Checks for invalid characters
+var invalidCharacterCheck=function(string){
+	//
+	var pattern = new RegExp(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\\|\/|\+|\-/g);
+	//Test the string and return the result
+	return pattern.test(string);
+}
 
 
 
