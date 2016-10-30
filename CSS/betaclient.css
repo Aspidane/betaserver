@@ -48,25 +48,29 @@ body{
    	font-family: "lucida sans", times, serif;
    	float:both;
 }
-nav a{
-	/*display: block-inline;*/
-    display:none;
+.my_share{
+	/* background-color: rgba(255, 255, 255, .3);     */
+    background: url('fb_icon.png');
+/*         background-size:cover;
+ */     
+	display: block-inline;
+    /* display:none; */
 	font-family: "lucida sans", times, serif;
-    padding: 5px;
-	/*padding-top: 5px;*/
-	margin-left: 15px;
-	margin-top: 15px;
+
+
 	text-decoration: none;
-	font-size: 120%;
-	text-align: center;
-	border: 1px solid yellow;
+
+
 	color: white;
-	background-color: rgba(255, 255, 255, .3);
+
 	float: left;
 	border-radius: 5px;  
 	box-sizing: border-box;
-	width: 100px;
-	height: 40px;
+	width: 32px;
+	height: 32px;
+    
+
+    
 }
 .Left{
 	text-align: center;    
@@ -514,3 +518,4 @@ nav a{
 	float:left;
 	background-color: rgba(255,83,0,0.4);
 }
+
