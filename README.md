@@ -1,5 +1,6 @@
 # betaserver
 
+Version 1.0
 
 This application [is hosted on Heroku](https://betaserver.herokuapp.com/).
 
@@ -21,3 +22,7 @@ The app should now be accessible via a browser using [localhost](http://localhos
 ## Documentation
 
 This app uses the Apache license.
+
+## Contact
+
+Feel free to contact us to aspidane@gmail.com
