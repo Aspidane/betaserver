@@ -699,6 +699,8 @@ function before_add_me_Click(the_user_name){
     var index= finding_tab_byname(the_user_name);
     console.log(index);
     dialog_on_click(tabs[index].id_name); // adds the focus to the lastest created (or just the new one)
+    //Show the new tab
+    showRightMostTabs();
 }/*****************************************************/  	 
 function btn_add_me_Click(the_user_name){
 	//alert(the_user_name);
@@ -757,7 +759,7 @@ function btn_add_me_Click(the_user_name){
     //Check to see if there are too many tabs
     setTabButtons();    
     //Show the new tab
-    showRightMostTabs();
+    //showRightMostTabs();
 }    
 /*****************************************************/    
 function dialog_on_click(tab_id){
