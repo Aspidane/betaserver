@@ -10,8 +10,8 @@ var public_chatrooms=[]; //list of names
 //var client_chatrooms=[]; //DEPRECATED list of objects CONTAINS all the chatroom names and users related that the USER has joined
  
 //Connect to the server via socket.io    --WARNING-- REMOVE 'http://localhost' if it goes to the online version
-var socket = io('http://localhost');
-//var socket = io();
+/* var socket = io('http://localhost'); */
+var socket = io();
 var btnadd_me = document.getElementById('add_me');   
 var tabs = [];
 var tab_total_count = 0;
