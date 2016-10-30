@@ -1,5 +1,5 @@
 "use strict";
-// Online version OCt/17 
+// Online version Oct/30
 var max_valor_msg=300;
 var max_valor_username=15;
 //Client's username. Will be updated when they connect to the server.
@@ -10,31 +10,37 @@ var public_chatrooms=[]; //list of names
 //var client_chatrooms=[]; //DEPRECATED list of objects CONTAINS all the chatroom names and users related that the USER has joined
  
 //Connect to the server via socket.io    --WARNING-- REMOVE 'http://localhost' if it goes to the online version
-//var socket = io('http://localhost');
-var socket = io();
+var socket = io('http://localhost');
+//var socket = io();
 var btnadd_me = document.getElementById('add_me');   
 var tabs = [];
 var tab_total_count = 0;
-/*****************************************************/
-// Anchorme.js 0.6.0 (min function) License: The MIT License (MIT) - Copyright (c) 2016 Alex Corvi
-!function(e){"use strict";String.prototype.endsWith||(String.prototype.endsWith=function(e,t){var i=this.toString();("number"!=typeof t||!isFinite(t)||Math.floor(t)!==t||t>i.length)&&(t=i.length),t-=e.length;var n=i.indexOf(e,t);return-1!==n&&n===t}),String.prototype.startsWith||(String.prototype.startsWith=function(e,t){return t=t||0,this.substr(t,e.length)===e});var t={};t.occurrences=function(e,t,i){if(e+="",t+="",t.length<=0)return e.length+1;for(var n=0,r=0,a=i?1:t.length;;){if(r=e.indexOf(t,r),!(r>=0))break;n++,r+=a}return n},t.dontbreakHTML=function(e){for(var t=["src","href","cite","formaction","icon","manifest","poster","codebase","background","profile","usemap"],i=t.length;i--;){var n=[t[i]+'=" ',t[i]+"=' "],r=[t[i]+'="',t[i]+"='"];e=e.split(n[0]).join(r[0]),e=e.split(n[1]).join(r[1])}return e},t.removeCharifItEndsWithIt=function(e,i){return e.endsWith(i)?(e=e.substring(0,e.length-1),t.removeCharifItEndsWithIt(e,i)):e},t.TLDs=[".com",".org",".edu",".gov",".uk",".net",".ca",".de",".jp",".fr",".au",".us",".ru",".ch",".it",".nl",".se",".no",".es",".io",".aero",".mil",".biz",".cat",".coop",".info",".jobs",".mobi",".museum",".name",".pro",".travel",".ac",".ad",".ae",".af",".ag",".ai",".al",".am",".an",".ao",".ap",".aq",".ar",".as",".at",".aw",".az",".ax",".ba",".bb",".bd",".be",".bf",".bg",".bh",".bi",".bj",".bm",".bn",".bo",".br",".bs",".bt",".bv",".bw",".by",".bz",".cc",".cd",".cf",".cg",".ci",".ck",".cl",".cm",".cn",".co",".cr",".cs",".cu",".cv",".cx",".cy",".cz",".dj",".dk",".dm",".do",".dz",".ec",".ee",".eg",".eh",".er",".et",".eu",".fi",".fj",".fk",".fm",".fo",".ga",".gb",".gd",".ge",".gf",".gg",".gh",".gi",".gl",".gm",".gn",".gp",".gq",".gr",".gs",".gt",".gu",".gw",".gy",".hk",".hm",".hn",".hr",".ht",".hu",".id",".ie",".il",".im",".in",".io",".iq",".ir",".is",".je",".jm",".jo",".ke",".kg",".kh",".ki",".km",".kn",".kp",".kr",".kw",".ky",".kz",".la",".lb",".lc",".li",".lk",".lr",".ls",".lt",".lu",".lv",".ly",".ma",".mc",".md",".mg",".mh",".mk",".ml",".mm",".mn",".mo",".mp",".mq",".mr",".ms",".mt",".mu",".mv",".mw",".mx",".my",".mz",".na",".nc",".ne",".nf",".ng",".ni",".np",".nr",".nu",".nz",".om",".pa",".pe",".pf",".pg",".ph",".pk",".pl",".pm",".pn",".pr",".ps",".pt",".pw",".py",".qa",".re",".ro",".rw",".sa",".sb",".sc",".sd",".sg",".sh",".si",".sj",".sk",".sl",".sm",".sn",".so",".sr",".st",".sv",".sy",".sz",".tc",".td",".tf",".tg",".th",".tj",".tk",".tl",".tm",".tn",".to",".tp",".tr",".tt",".tv",".tw",".tz",".ua",".ug",".um",".uy",".uz",".va",".vc",".ve",".vg",".vi",".vn",".vu",".wf",".ws",".ye",".yt",".yu",".za",".zm",".zw",".guru",".berlin",".photography",".tips",".today",".email",".technology",".company",".clothing",".me",".asia",".abb",".academy",".active",".actor",".ads",".adult",".afl",".agency",".aig",".airforce",".alsace",".amsterdam",".android",".apartments",".app",".aquarelle",".archi",".army",".associates",".attorney",".auction",".audio",".auto",".autos",".axa",".azure",".band",".bank",".bar",".barcelona",".barclays",".bargains",".bauhaus",".bayern",".bbc",".bbva",".bcn",".beer",".bentley",".best",".bharti",".bible",".bid",".bike",".bing",".bingo",".bio",".black",".blackfriday",".bloomberg",".blue",".bmw",".bnl",".bnpparibas",".boats",".bond",".boo",".boutique",".bradesco",".bridgestone",".broker",".brother",".brussels",".budapest",".build",".builders",".business",".buzz",".bzh",".cab",".cafe",".cal",".camera",".camp",".canon",".capetown",".capital",".caravan",".cards",".care",".career",".careers",".cars",".cartier",".casa",".cash",".casino",".catering",".cba",".cbn",".center",".ceo",".cern",".cfa",".cfd",".channel",".chat",".cheap",".chloe",".christmas",".chrome",".church",".cisco",".citic",".city",".claims",".cleaning",".click",".clinic",".cloud",".club",".coach",".codes",".coffee",".college",".cologne",".community",".computer",".condos",".construction",".consulting",".contractors",".cooking",".cool",".corsica",".country",".coupons",".courses",".credit",".creditcard",".cricket",".crown",".crs",".cruises",".cuisinella",".cw",".cymru",".cyou",".dabur",".dad",".dance",".date",".dating",".datsun",".day",".dclk",".deals",".degree",".delivery",".delta",".democrat",".dental",".dentist",".desi",".design",".dev",".diamonds",".diet",".digital",".direct",".directory",".discount",".dnp",".docs",".dog",".doha",".domains",".doosan",".download",".drive",".durban",".dvag",".earth",".eat",".education",".emerck",".energy",".engineer",".engineering",".enterprises",".epson",".equipment",".erni",".esq",".estate",".eus",".events",".everbank",".exchange",".expert",".exposed",".express",".fail",".faith",".fan",".fans",".farm",".fashion",".feedback",".film",".finance",".financial",".firmdale",".fish",".fishing",".fit",".fitness",".flights",".florist",".flowers",".flsmidth",".fly",".foo",".football",".forex",".forsale",".forum",".foundation",".frl",".frogans",".fund",".furniture",".futbol",".fyi",".gal",".gallery",".game",".garden",".gbiz",".gdn",".gent",".genting",".ggee",".gift",".gifts",".gives",".glass",".gle",".global",".globo",".gmail",".gmo",".gmx",".gold",".goldpoint",".golf",".goo",".goog",".google",".gop",".graphics",".gratis",".green",".gripe",".guge",".guide",".guitars",".hamburg",".hangout",".haus",".healthcare",".help",".here",".hermes",".hiphop",".hitachi",".hiv",".hockey",".holdings",".holiday",".homedepot",".homes",".honda",".horse",".host",".hosting",".hoteles",".hotmail",".house",".how",".hsbc",".ibm",".icbc",".icu",".ifm",".iinet",".immo",".immobilien",".industries",".infiniti",".ing",".ink",".institute",".insure",".int",".international",".investments",".irish",".ist",".istanbul",".iwc",".java",".jcb",".jetzt",".jewelry",".jlc",".jll",".joburg",".jprs",".juegos",".kaufen",".kddi",".kim",".kitchen",".kiwi",".koeln",".komatsu",".krd",".kred",".kyoto",".lacaixa",".land",".lasalle",".lat",".latrobe",".law",".lawyer",".lds",".lease",".leclerc",".legal",".lgbt",".liaison",".lidl",".life",".lighting",".limited",".limo",".link",".live",".loan",".loans",".lol",".london",".lotte",".lotto",".love",".ltda",".lupin",".luxe",".luxury",".madrid",".maif",".maison",".management",".mango",".market",".marketing",".markets",".marriott",".mba",".media",".meet",".melbourne",".meme",".memorial",".men",".menu",".miami",".microsoft",".mini",".mma",".moda",".moe",".monash",".money",".montblanc",".mormon",".mortgage",".moscow",".motorcycles",".mov",".movie",".movistar",".mtn",".mtpc",".nadex",".nagoya",".navy",".nec",".netbank",".network",".neustar",".new",".news",".nexus",".ngo",".nhk",".nico",".ninja",".nissan",".nra",".nrw",".ntt",".nyc",".office",".okinawa",".omega",".one",".ong",".onl",".online",".ooo",".oracle",".orange",".organic",".osaka",".otsuka",".ovh",".page",".panerai",".paris",".partners",".parts",".party",".pharmacy",".philips",".photo",".photos",".physio",".piaget",".pics",".pictet",".pictures",".pink",".pizza",".place",".play",".plumbing",".plus",".pohl",".poker",".porn",".post",".praxi",".press",".prod",".productions",".prof",".properties",".property",".pub",".qpon",".quebec",".racing",".realtor",".realty",".recipes",".red",".redstone",".rehab",".reise",".reisen",".reit",".ren",".rent",".rentals",".repair",".report",".republican",".rest",".restaurant",".review",".reviews",".rich",".ricoh",".rio",".rip",".rocks",".rodeo",".rs",".rsvp",".ruhr",".run",".ryukyu",".saarland",".sakura",".sale",".samsung",".sandvik",".sap",".sarl",".saxo",".sca",".scb",".school",".schule",".schwarz",".science",".seat",".sener",".services",".sew",".sex",".sexy",".shiksha",".shoes",".show",".shriram",".singles",".site",".ski",".sky",".skype",".sncf",".soccer",".social",".software",".sohu",".solar",".solutions",".sony",".soy",".space",".spiegel",".spreadbetting",".starhub",".statoil",".studio",".study",".style",".su",".sucks",".supplies",".supply",".support",".surf",".surgery",".suzuki",".swatch",".swiss",".sx",".sydney",".systems",".taipei",".tatar",".tattoo",".tax",".taxi",".team",".tech",".tel",".telefonica",".temasek",".tennis",".thd",".theater",".tickets",".tienda",".tires",".tirol",".tokyo",".tools",".top",".toray",".toshiba",".tours",".town",".toys",".trade",".trading",".training",".trust",".tui",".ubs",".university",".uno",".uol",".vacations",".vegas",".ventures",".versicherung",".vet",".viajes",".video",".villas",".vision",".vista",".vistaprint",".vlaanderen",".vodka",".vote",".voting",".voto",".voyage",".wales",".walter",".wang",".watch",".webcam",".website",".wed",".wedding",".weir",".wien",".wiki",".win",".windows",".wme",".work",".works",".world",".wtc",".wtf",".xbox",".xerox",".xin",".xxx",".xyz",".yandex",".youtube",".zip",".zone",".zuerich"],t.checks={},t.checks.ip=function(e){if(t.occurrences(e,".")>2){var i=e.split("."),n=i[0],r=i[1],a=i[2];if(i[3].indexOf(":")>0)var s=i[3].indexOf(":"),o=i[3].substring(0,s),l=i[3].substring(s);else if(i[3].indexOf("/")>0)var c=i[3].indexOf("/"),o=i[3].substring(0,c),l=i[3].substring(c);else var o=i[3],l=!1;return(l===!1||"/"===l.charAt(0)||":"===l.charAt(0))&&!isNaN(n)&&!isNaN(r)&&!isNaN(a)&&!isNaN(o)&&254>=n-1&&254>=r-1&&254>=a-1&&254>=o-1&&n.length>0&&r.length>0&&a.length>0&&o.length>0?!0:!1}return!1},t.checks.email=function(e,i){if(e=e.toLowerCase(),1==t.occurrences(e,"@")){e=t.removeCharifItEndsWithIt(e,"."),e=t.removeCharifItEndsWithIt(e,","),e=t.removeCharifItEndsWithIt(e,";");for(var n=e.indexOf("@"),r=e.substring(0,n),a=e.substring(n+1,e.length),s=!0,o=0;o<r.length;o++){var l=r[o];-1==="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!#$%&'*+-/=?^_`{|}~.".indexOf(l)&&(o=r.length,s=!1)}for(var o=0;o<a.length;o++){var c=a[o];-1==="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.:".indexOf(c)&&(o=a.length,s=!1)}if(s){for(var d=!1,o=0;i>o;o++){var u=t.TLDs[o];e.endsWith(u)&&(o=t.TLDs.length,d=!0)}return d===!0?!0:!1}return!1}return!1},t.checks.url=function(e,i){if(e=e.toLowerCase(),e.indexOf(".")>0&&(e.indexOf("/")>3||e.indexOf("/")<0)){if(e=t.removeCharifItEndsWithIt(e,"."),e=t.removeCharifItEndsWithIt(e,","),e=t.removeCharifItEndsWithIt(e,";"),1==t.occurrences(e,".")&&e.indexOf(".")===e.length-1)return!1;var n=!0;if(e.indexOf("/")>3){var r=e.indexOf("/"),a=e.substring(0,r);if(a.indexOf("..")>-1)return!1;for(var s=0;s<a.length;s++){var o=a[s];-1==="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.:".indexOf(o)&&(s=a.length,n=!1)}}else{if(e.indexOf("..")>-1)return!1;for(var s=0;s<e.length;s++){var o=e[s];-1==="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-.:".indexOf(o)&&(s=e.length,n=!1)}}if(n){if(e.endsWith(".com"))return!0;for(var s=0;i>s;s++){var l=t.TLDs[s];if(e.endsWith(l)||e.indexOf(l+"/")>-1||e.indexOf(l+":")>-1)return s=t.TLDs.length,!0}return!1}return!1}return!1},t.order=function(e,i){var n=e.split(" "),r=function(e){for(var t=0;t<e.length;t++)!(e[t].indexOf(".")>-1&&""!==e[t])||"("===e[t-1]&&")"===e[t+1]||"("!==e[t+1]&&")"!==e[t+1]||(e[t]=e[t]+e[t+1],"string"==typeof e[t+2]&&(e[t]=e[t]+e[t+2]),"string"==typeof e[t+3]&&(e[t]=e[t]+e[t+3]),"string"==typeof e[t+4]&&(e[t]=e[t]+e[t+4]),e.splice(t+1,4),r(e))},a=function(e){for(var t=0;t<e.length;t++)!(e[t].indexOf(".")>-1&&""!==e[t])||"["===e[t-1]&&"]"===e[t+1]||"["!==e[t+1]&&"]"!==e[t+1]||(e[t]=e[t]+e[t+1],"string"==typeof e[t+2]&&(e[t]=e[t]+e[t+2]),"string"==typeof e[t+3]&&(e[t]=e[t]+e[t+3]),"string"==typeof e[t+4]&&(e[t]=e[t]+e[t+4]),e.splice(t+1,4),r(e))};r(n),a(n);for(var s=0;s<n.length;s++){for(var o=!1,l=s;l>0&&(">"!==n[l]||"/a"!==n[l-1]||"<"!==n[l-2]);l--)if("a"===n[l]&&"<"===n[l-1]){o=!0;break}if(!o){var c=n[s],d=!1,u=!1;if(c.indexOf(".")>-1){for(var f=!0,h="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%",g=0;g<c.length;g++){var m=c[g];-1===h.indexOf(m)&&(g=c.length,f=!1)}if(f&&(i.urls&&(c.startsWith("http://")||c.startsWith("HTTP://"))?d=!0:i.urls&&(c.startsWith("https://")||c.startsWith("HTTPS://"))?d=!0:i.urls&&(c.startsWith("ftp://")||c.startsWith("FTP://"))?d=!0:i.urls&&(c.startsWith("file:///")||c.startsWith("FILE:///"))?d=!0:i.emails&&(c.startsWith("mailto:")||c.startsWith("MAILTO:"))?d=!0:t.checks.ip(c)&&i.ips&&c.indexOf(".")>0?(d=!0,u=i.defaultProtocol):t.checks.email(c,i.TLDs)&&i.emails&&c.indexOf(".")>-1&&c.indexOf("@")>-1?(d=!0,u="mailto:"):t.checks.url(c,i.TLDs)&&i.urls&&(d=!0,u=i.defaultProtocol),d)){var p=u?u+c:c;p=t.removeCharifItEndsWithIt(p,"."),p=t.removeCharifItEndsWithIt(p,","),p=t.removeCharifItEndsWithIt(p,";");var b=i.truncate<=1?c:c.substring(0,i.truncate)+"...";if(i.attributes){n[s]="<a href='"+p+"'";for(var v in i.attributes)n[s]=n[s]+" "+v+"='"+i.attributes[v]+"' ";n[s]=n[s]+">"+b+"</a>"}else n[s]="<a href='"+p+"'>"+b+"</a>"}}}}return n.join(" ")},t.js=function(e,i){"object"!=typeof i?i={attributes:!1,html:!0,ips:!0,emails:!0,urls:!0,TLDs:20,truncate:0,defaultProtocol:"http://"}:("object"!=typeof i.attributes&&(i.attributes=!1),"boolean"!=typeof i.html&&(i.html=!0),"boolean"!=typeof i.ips&&(i.ips=!0),"boolean"!=typeof i.emails&&(i.emails=!0),"boolean"!=typeof i.urls&&(i.urls=!0),"number"!=typeof i.TLDs&&(i.TLDs=20),"string"!=typeof i.defaultProtocol&&(i.defaultProtocol="http://"),"number"!=typeof i.truncate&&(i.truncate=0)),i.html&&(e.indexOf("</a>")>-1||e.indexOf("<img ")>-1||e.indexOf("<blockquote ")>-1||e.indexOf("<del ")>-1||e.indexOf("<iframe ")>-1||e.indexOf("<script  ")>-1||e.indexOf("<audio ")>-1||e.indexOf("<button ")>-1||e.indexOf("<command ")>-1||e.indexOf("<embed ")>-1||e.indexOf("<html ")>-1||e.indexOf("<video ")>-1||e.indexOf("<applet ")>-1||e.indexOf("<area ")>-1||e.indexOf("<base ")>-1||e.indexOf("<body ")>-1||e.indexOf("<frame ")>-1||e.indexOf("<head ")>-1||e.indexOf("<usemap ")>-1||e.indexOf("<link ")>-1||e.indexOf("<input ")>-1||e.indexOf("<source ")>-1||e.indexOf("<q ")>-1)&&(e=t.dontbreakHTML(e)),e=e.split("\n").join(" \n "),e=e.split("(").join(" ( "),e=e.split(")").join(" ) "),e=e.split("[").join(" [ "),e=e.split("]").join(" ] "),e=e.split("<").join(" < "),e=e.split(">").join(" > ");var n=t.order(e,i);return n=n.split(" \n ").join("\n"),n=n.split(" ( ").join("("),n=n.split(" ) ").join(")"),n=n.split(" [ ").join("["),n=n.split(" ] ").join("]"),n=n.split(" < ").join("<"),n=n.split(" > ").join(">")},"undefined"!=typeof exports?("undefined"!=typeof module&&module.exports&&(exports=module.exports=t),exports.anchorme=t):"function"==typeof define&&define.amd?define("anchorme",[],function(){return t}):e.anchorme=t}("object"==typeof window?window:this);
-
-
-
+//Options for links in user messages
+var anchormeOptions = {
+	//"anyAttribute":"anyValue" //Generic example
+	"attributes":{
+		"class":"messageLink",
+		"target":"_blank",
+	},
+	"html":true,
+	ips:true,
+	emails:true,
+	urls:true,
+	TLDs:20,
+	truncate:50,
+	defaultProtocol:"https://"
+};
 /*****************************************************/
 socket.on('welcome', function (data) {
     username=data["name"]; //Get the default name from the server
 	//Add the name to the username box
 	document.getElementById("WuserID").innerHTML="Welcome "+username+"!";
     console.log("Welcome "+username);
-    
     //COOKIES
     //checkCookie(data["time"]); 
-
     //name list for all public rooms available to join
     public_chatrooms=data["rooms"];
     refresh_rooms();
-    
 	//FIRST TIME Add user to the first public chat (index 0) 
     join_chatroom(public_chatrooms[0]);
 }); //welcome
@@ -79,6 +85,7 @@ socket.on('messageFromServer', function (data) {
 	console.log("Received: "+JSON.stringify(data) );
 	//Get what type of message it is
 	var typeReceived=data["type"]; //data.type or data["type"] will give the type property of the object called data
+	console.log("Type:"+typeReceived);
 	//0 is a normal message
 	if("0"==typeReceived){
     	//Add the message to the chat
@@ -97,9 +104,8 @@ socket.on('messageFromServer', function (data) {
         	username=data["updatedName"];
         	document.getElementById("WuserID").innerHTML="Welcome "+data["updatedName"]+ "!";
         	document.getElementById("userid").value="";
-            
-            //WARNING HERE is this happening twice? must to be check
-        	//refreshUsers(data); //The server will send out a message telling the client to do this
+            var next_focus=document.getElementById("userMessage");
+            next_focus.focus();            
     	}
 	//2 is the response for a new user
 	} else if("2"==typeReceived){
@@ -113,7 +119,6 @@ socket.on('messageFromServer', function (data) {
             //Refresh the list of users online
             refreshUsers(data);             
         }
-
 	//3 is the response is a user leaves
 	} else if("3"==typeReceived){
         //io.sockets.emit("messageFromServer", {type:"3", room:publicRooms[j].name,time:timestamp,day:t_day,leaving_user:username,others:publicRooms[j].users});
@@ -126,7 +131,6 @@ socket.on('messageFromServer', function (data) {
         //refreshing users if the leaving_user is on any public or private room
             refreshUsers(data);      
         //WARNING If the leaving_user is on a private room we might also send a msg to the log
-                
 	//4 is the reponse if a user changes their name
 	} else if("4"==typeReceived){
     	//Get the old and new names
@@ -176,7 +180,18 @@ socket.on('messageFromServer', function (data) {
                     //And add the destroy functionality back to it
                     var closing_x = document.getElementById("Cls_"+id);
                     //Add the onclick listener with destroy_me_Click
-                    closing_x.addEventListener('click', destroy_me_Click);                     
+                    closing_x.addEventListener('click', destroy_me_Click);     
+                    if(username!=newName){
+                        //Update the width
+                        var privateTab=document.getElementById(tabs[index].id_name);
+                        //Setting the width to auto gets it the width it needs
+                        //for the text.
+                        privateTab.setAttribute("style","width: auto");
+                        //Now calculate the width as the 
+                        //current width (text width)+x button width+buffer space
+                        var width=privateTab.clientWidth+closing_x.clientWidth+5;
+                        privateTab.setAttribute("style","width:"+width+"px");
+                    }   
                 }    
         }
  	//7 if user is leaving a chat-room
@@ -239,14 +254,15 @@ function refresh_users_actualtab(index){
             var text_option_1 = document.createTextNode('Send priv. msg');
             option1.appendChild(text_option_1);
      
-            var option2 = document.createElement("div");
+/*             var option2 = document.createElement("div");
             //option2.setAttribute("id","p_msg_"+i);
             //option2.setAttribute("class","my_p_msg");
             //option2.setAttribute("onclick","before_add_me_Click('"+users[i]+"')");   
             var text_option_2 = document.createTextNode('Ignore');
-            option2.appendChild(text_option_2);       	 
+            option2.appendChild(text_option_2); */     
+            
             main_option_user_container.appendChild(option1);
-            main_option_user_container.appendChild(option2);
+            //main_option_user_container.appendChild(option2);
             //appending the option_user_container to the main_container
         }   	 
         main_container.appendChild(main_option_user_container);   
@@ -335,6 +351,7 @@ window.onclick = function(event) {
 //Sends a chat message to the server
 function sendMessage(){
 	var input=document.getElementById("userMessage"); //Get the message from the input box
+	var test=RemoveBad(input.value);
 	var textLength = input.value.length;
     var room="";
     //alert(input.value);	 
@@ -415,6 +432,7 @@ function finding_name(my_str) {
 /*****************************************************/   
 function finding_tab_byname(the_tab_name){
 	var pos = -1;
+	console.log("Tab name: "+the_tab_name);
 	for(var i=0;i<tabs.length;i++){    
     	if(the_tab_name==public_chatrooms[i]){
         	if (tabs[i].tab_name == the_tab_name){
@@ -441,20 +459,23 @@ function refreshing_modal(i){
 function add_date(data){
     var my_date= "<span class='my_time'>"+data["time"]+"<p class='my_day'>"+data["day"]+"</p></span>";
     //var my_date= "<span class='my_time'>"+data["day"]+"</span>";
-    
     return my_date;
 }
 /*****************************************************/
-   
+function make_links(message){
+	return anchorme.js(message, anchormeOptions);
+}
+/*****************************************************/
 function write_in_chat(type,data){
 	//So here we must to feed the logs and refresh the chatbox depening of the actual tab kind
 	// and find where (which tab) put the message, and wich tab refresh (actual tab)
 	if(type=="0"){ //message by user
 //    	io.to(data["room"]).emit('messageFromServer', { type:"0", sender:username, message:data["message"],time:timestamp,day:t_day, room:data["room"] });
     	var tab_i= finding_tab_byname(data["room"]);
+		console.log("tab_i: "+tab_i);
     	if(tab_i>=0){
             // using anchorme.js("text who might contains links") to make it clickable
-        	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+anchorme.js(data["message"])+add_date(data)+"</span>";
+        	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+make_links(data["message"])+add_date(data)+"</span>";
         	if (tabs[tab_i].tab_status== true){
             	refreshing_modal(tab_i);
             }
@@ -498,7 +519,7 @@ function write_in_chat(type,data){
     	var tab_i= finding_tab_byname(data["sender"]);
     	//alert(msg1 +" "+tab_i);   	 
     	if(tab_i>=0){ //updating private msg log
-        	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+anchorme.js(data["message"])+add_date(data)+"</span>";
+        	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+make_links(data["message"])+add_date(data)+"</span>";
         	if (tabs[tab_i].tab_status== true){
             	refreshing_modal(tab_i);
         	} else {
@@ -508,7 +529,7 @@ function write_in_chat(type,data){
         	btn_add_me_Click(data["sender"]);
         	tab_i= finding_tab_byname(data["sender"]);
         	//alert(data["sender"]+" "+tab_i);
-        	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+anchorme.js(data["message"])+add_date(data)+"</span>";
+        	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+make_links(data["message"])+add_date(data)+"</span>";
         	if (tabs[tab_i].tab_status== true){
             	refreshing_modal(tab_i);
         	}
@@ -516,10 +537,10 @@ function write_in_chat(type,data){
 	}else if(type=="6"){
     	var tab_i= finding_tab_byname(data["recipient"]);
     	//alert(msg2 +" "+tab_i);
-    	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+anchorme.js(data["message"])+add_date(data)+"</span>";
+    	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+make_links(data["message"])+add_date(data)+"</span>";
     	refreshing_modal(tab_i);   	 
 	}else if(type=="7" ){
-    	var tab_i= finding_tab_byname(data["room"]);    
+    	var tab_i= finding_tab_byname(data["name"]);    
     	tabs[tab_i].tab_log += "<br /><span class='systemMsg'>"+data["name"]+" has left the room."+add_date(data)+"</span>";
         if (tabs[tab_i].tab_status== true){
             refreshing_modal(tab_i);
@@ -551,7 +572,6 @@ function write_in_chat(type,data){
    			 document.getElementById(tabs[tab_i].id_name).classList.add("newMsg");
             }
     	}        
-        
     }  
 }
 /*****************************************************/  	 
@@ -613,7 +633,7 @@ function destroy_me_Click(event) {
     //Check to see if there are too many tabs
     setTabButtons();    
     //Show the new tab
-    showRightMostTabs();    
+    showAnotherTab();    
 }
 /*****************************************************/  	 
 function add_me_chatroom(chat_name, chat_users, chat_kind){
@@ -656,26 +676,29 @@ function add_me_chatroom(chat_name, chat_users, chat_kind){
     	closing_x.setAttribute("id",new_tab.clsx_name);
     	tab.appendChild(closing_x);
     	closing_x.addEventListener('click', destroy_me_Click);  
-        //Dynamically figure out the width
-        var width=tab.clientWidth+closing_x.clientWidth+5;
-        //Set the width
-        tab.setAttribute("style","width:"+width+"px");
-    	dialog_on_click(new_tab.id_name); // adds the focus to the lastest created (or just the new one)
+		//Dynamically figure out the width
+		var width=tab.clientWidth+closing_x.clientWidth+5;
+		//console.log("tab width: "+tab.clientWidth);
+		//console.log("x width: "+closing_x.clientWidth);
+		//Set the width
+		tab.setAttribute("style","width:"+width+"px");
+        document.getElementById(new_tab.id_name).focus;
+		
+		dialog_on_click(new_tab.id_name); // adds the focus to the lastest created (or just the new one)
 	}else{
     	dialog_on_click(old_tab_id_name); // adds the focus to the tab that has the user we want to talk and was created before
 	}
+	//Check to see if there are too many tabs
+    setTabButtons();    
+    //Show the new tab
+    showRightMostTabs();
 }
-
 /*****************************************************/  	 
 function before_add_me_Click(the_user_name){
-
- btn_add_me_Click(the_user_name);
- var index= finding_tab_byname(the_user_name);
- console.log(index);
- dialog_on_click(tabs[index].id_name); // adds the focus to the lastest created (or just the new one)
- 
- 
-
+    btn_add_me_Click(the_user_name);
+    var index= finding_tab_byname(the_user_name);
+    console.log(index);
+    dialog_on_click(tabs[index].id_name); // adds the focus to the lastest created (or just the new one)
 }/*****************************************************/  	 
 function btn_add_me_Click(the_user_name){
 	//alert(the_user_name);
@@ -718,13 +741,14 @@ function btn_add_me_Click(the_user_name){
     	closing_x.setAttribute("class","close-x");
     	closing_x.setAttribute("id",new_tab.clsx_name);
     	tab.appendChild(closing_x);
-    	closing_x.addEventListener('click', destroy_me_Click);
-        //Dynamically figure out the width
-        var width=tab.clientWidth+closing_x.clientWidth+5;
-        //Set the width
-        tab.setAttribute("style","width:"+width+"px");
-
-        if(tabs.length==1){ //means this is the only tab created, must to be focussed
+    	closing_x.addEventListener('click', destroy_me_Click); 
+		//Dynamically figure out the width
+		var width=tab.clientWidth+closing_x.clientWidth+5;
+		//console.log("tab width: "+tab.clientWidth);
+		//console.log("x width: "+closing_x.clientWidth);
+		//Set the width
+		tab.setAttribute("style","width:"+width+"px");
+        if(tabs.length==1){ //means this is the only tab created, must to be focused
             dialog_on_click(new_tab.id_name); // adds the focus to the lastest created (or just the new one)
         }
 	}else{
@@ -780,62 +804,58 @@ function join_chatroom(chat_name, chat_kind){
 } 
 /*****************************************************/
 function checkTabVisibility(tab_id){
-    var tabHolder=document.getElementById("tab_bar");
-    
+    var tabHolder=document.getElementById("tab_holder");
     //Check to see if the browser supports the method
     if(tabHolder.getBoundingClientRect){
-   	 
-   	 //Get the borders for the tab bar
-   	 var borders=tabHolder.getBoundingClientRect();
-   	 var x=borders.left;
-   	 var y=borders.top;
-   	 
-   	 var width=borders.right-borders.left;
-   	 var height=borders.bottom-borders.top;
-   	 
-   	 
-   	 var current=document.getElementById(tab_id);
-   	 var tabBorders=current.getBoundingClientRect();
-   		 
-   	 var top=tabBorders.top;
-   	 var bottom=tabBorders.bottom;
-   	 var left=tabBorders.left;
-   	 var right=tabBorders.right;
-   	 
-   	 //leftTabButtons, rightTabButtons
-   	 
-   	 //Get the borders for the buttons if visible
-   	 var leftButtons=document.getElementById("leftTabButtons");
-   	 var rightButtons=document.getElementById("rightTabButtons");
-   	 
-   	 //If the left buttons are visible, adjust for it
-   	 if(false==leftButtons.classList.contains("hidden_tab")){
-   		 //Get the width of the buttons' div
-   		 var leftAdjust=leftButtons.offsetWidth;
-   		 //And adjust for it
-   		 left=left-leftAdjust-2;
-   	 }
-   	 
-   	 //Do the same on the right side
-   	 
-   	 //If the right buttons are visible, adjust for it
-   	 if(false==rightButtons.classList.contains("hidden_tab")){
-   		 //Get the width of the buttons' div
-   		 var rightAdjust=rightButtons.offsetWidth;
-   		 //And adjust for it
-   		 right=right+rightAdjust+5;
-   	 }
-   		 
-   	 //Check to see if it is within the tab border
-   	 if(top>=borders.top && left>=borders.left && bottom<=borders.bottom
-   		 && right <=borders.right ){
-   			 
-   			 //If it is, return true
-   			 return true
-   	 }
-   	 
-   	 //If it is not, false is returned
-   	 return false;
+        //Get the borders for the tab bar
+        var borders=tabHolder.getBoundingClientRect();
+        var x=borders.left;
+        var y=borders.top;
+        var width=borders.right-borders.left;
+        var height=borders.bottom-borders.top;
+        var current=document.getElementById(tab_id);
+        var tabBorders=current.getBoundingClientRect();
+        var top=tabBorders.top;
+        var bottom=tabBorders.bottom;
+        var left=tabBorders.left;
+        var right=tabBorders.right;
+        //leftTabButtons, rightTabButtons
+        //Get the borders for the buttons if visible
+        var leftButtons=document.getElementById("leftTabButtons");
+        var rightButtons=document.getElementById("rightTabButtons");
+/*         //If the left buttons are visible, adjust for it
+        if(false==leftButtons.classList.contains("hidden_tab")){
+            //Get the width of the buttons' div
+            var leftAdjust=leftButtons.offsetWidth;
+            //And adjust for it
+            left=left-leftAdjust-2;
+        }
+        //Do the same on the right side
+        //If the right buttons are visible, adjust for it
+        if(false==rightButtons.classList.contains("hidden_tab")){
+            //Get the width of the buttons' div
+            var rightAdjust=rightButtons.offsetWidth;
+            console.log("rightAdjust: "+rightAdjust);
+            console.log("rightAdjust2: "+rightButtons.clientWidth);
+            //Check to see if the right buttons are visible
+            //Get the border
+            var rightBorders=rightButtons.getBoundingClientRect();
+            var rightTop=tabBorders.top;
+            var rightBottom=rightTop+rightButtons.offsetWidth;
+            var rightLeft=tabBorders.left;
+            var rightRight=rightLeft+rightButtons.offsetWidth;
+            //And adjust for it
+            right=right+rightAdjust+10;
+        } */
+            
+        //Check to see if it is within the tab border
+        if(top>=borders.top && left>=borders.left && bottom<=borders.bottom
+            && right <=borders.right ){
+            //If it is, return true
+            return true
+        }
+        //If it is not, false is returned
+        return false;
     }
 }
 /*****************************************************/
@@ -843,16 +863,15 @@ function checkTabVisibility(tab_id){
 //Meant to be used in conjuction with another function
 function hideAllTabs(){
     var currentTab; //The current tab
-    
     //For each tab
     for(var i=0;i<tabs.length;i++){
    	 //Get the tab
    	 currentTab=document.getElementById(tabs[i].id_name);
    	 //If it is not already hidden
-   	 if(false===currentTab.classList.contains("hidden_tab") ){
-   		 //Hide it
-   		 currentTab.classList.add("hidden_tab");
-   	 }
+		if(false===currentTab.classList.contains("hidden_tab") ){
+			//Hide it
+			currentTab.classList.add("hidden_tab");
+		}
     }
 }
 /*****************************************************/
@@ -860,39 +879,35 @@ function hideAllTabs(){
 function showLeftMostTabs(){
     //First, hide the tabs to ensure a clean slate
     hideAllTabs();
-    
     var id; //The id used to identify the tab
     var currentTab; //The current tab    
     var oneTabVisible=false; //Flag to make sure at least 1 tab is visible
-    
     for(var i=0;i<tabs.length;i++){
-   	 //Get the id for convenience
-   	 id=tabs[i].id_name;
-   	 //Get the current tab
-   	 currentTab=document.getElementById(id);
-   	 //Unhide it by removing the hidden_tab class
-   	 currentTab.classList.remove("hidden_tab");
-   	 
-   	 //Check to see if it is visible.
-   	 if(!checkTabVisibility(id)){
-   		 //If not, readd the hidden_tab class
-   		 currentTab.classList.add("hidden_tab");
-   		 
-   		 //If it is not visible, check to see if there is at least 1 other tab
-   		 //that is visible.
-   		 if(oneTabVisible){
-   			 //If there is, break out of the loop (and essentially return)
-   			 break;
-   		 }
-   	 //If it is visible
-   	 } else {
-   		 //Display it if it's the leftmost one
-   		 if(false==oneTabVisible) dialog_on_click(id);
-   		 
-   		 //And note that there is a visible tab
-   		 oneTabVisible=true;
-   		 
-   	 }
+        //Get the id for convenience
+        id=tabs[i].id_name;
+        //Get the current tab
+        currentTab=document.getElementById(id);
+        //Unhide it by removing the hidden_tab class
+        currentTab.classList.remove("hidden_tab");
+        //Check to see if it is visible.
+        if(!checkTabVisibility(id)){
+            //If not, readd the hidden_tab class
+            currentTab.classList.add("hidden_tab");
+            
+            //If it is not visible, check to see if there is at least 1 other tab
+            //that is visible.
+            if(oneTabVisible){
+                //If there is, break out of the loop (and essentially return)
+                break;
+            }
+        //If it is visible
+        } else {
+            //Display it if it's the leftmost one
+            if(false==oneTabVisible) dialog_on_click(id);
+            
+            //And note that there is a visible tab
+            oneTabVisible=true;
+        }
     }
 }
 /*****************************************************/
@@ -900,74 +915,56 @@ function showLeftMostTabs(){
 function showRightMostTabs(){
     //First, hide the tabs to ensure a clean slate
     hideAllTabs();
-    
     var id; //The id used to identify the tab
     var currentTab; //The current tab    
     var rightMostTab; //The rightmost tab that's visible
     var oneTabVisible=false; //Flag to make sure at least 1 tab is visible
     var rightMostID=""; //ID of the tab that is the rightmost visible tab
     var i=tabs.length-1; //Counter variable; starts at the end and goes to 0
-    
     //While i is not yet below 0
     while(i>=0){
-   	 //Get the id for convenience
-   	 id=tabs[i].id_name;
-   	 
-   	 //Get the tab itself
-   	 currentTab=document.getElementById(id);
-   	 
-   	 //Unhide it by removing the hidden_tab class
-   	 currentTab.classList.remove("hidden_tab");
-   	 
-   	 //If the tab is visible
-   	 if(true===checkTabVisibility(id)){
-   		 //Mark it as the rightmost tab
-   		 rightMostTab=currentTab;
-   		 
-   		 //And display it
-         console.log('Forced showing tab');//ROSSI remove this
-   		 dialog_on_click(id);
-   		 
-   		 break; //And break out of the loop
-   	 //If it is not visible (i.e. it doesn't fit), re-hide it
-   	 } else {
-   		 currentTab.classList.add("hidden_tab");
-   	 }
-   	 
-   	 //Decrease i and check the next tab
-   	 i--;
+        //Get the id for convenience
+        id=tabs[i].id_name;
+        //Get the tab itself
+        currentTab=document.getElementById(id);
+        //Unhide it by removing the hidden_tab class
+        currentTab.classList.remove("hidden_tab");
+        //If the tab is visible
+        if(true===checkTabVisibility(id)){
+            //Mark it as the rightmost tab
+            rightMostTab=currentTab;
+            //And display it
+            dialog_on_click(id);
+            break; //And break out of the loop
+        //If it is not visible (i.e. it doesn't fit), re-hide it
+        } else {
+            currentTab.classList.add("hidden_tab");
+        }
+        //Decrease i and check the next tab
+        i--;
     }
-    
     //If rightMostTab was never initialized, there are either no tabs at all
     //Or none of them fit in the tab area
     if(null == rightMostTab){
-   	 return; //So return now
+        return; //So return now
     }
-    
     i--; //Decrease i and move onto the next tab before moving on
-    
     //Now rightMostTab is defined, loop through and unhide tabs until it gets hidden
     while(i>=0){
-   	 //Get the id for convenience
-   	 id=tabs[i].id_name;
-   	 
-   	 //Get the tab itself
-   	 currentTab=document.getElementById(id);
-   	 
-   	 //Unhide it by removing the hidden_tab class
-   	 currentTab.classList.remove("hidden_tab");
-   	 
-   	 //Check to see if the rightmost tab is still visible or not
-   	 if(false===checkTabVisibility(rightMostTab.id)){
-   		 
-   		 //IF not, re-hide the tab
-   		 currentTab.classList.add("hidden_tab");
-   		 
-   		 break; //And break out of the loop
-   	 }
-   	 
-   	 //Decrease i and check the next tab
-   	 i--;
+        //Get the id for convenience
+        id=tabs[i].id_name;
+        //Get the tab itself
+        currentTab=document.getElementById(id);
+        //Unhide it by removing the hidden_tab class
+        currentTab.classList.remove("hidden_tab");
+        //Check to see if the rightmost tab is still visible or not
+        if(false===checkTabVisibility(rightMostTab.id)){
+            //IF not, re-hide the tab
+            currentTab.classList.add("hidden_tab");
+            break; //And break out of the loop
+        }
+        //Decrease i and check the next tab
+        i--;
     }
 }
 /*****************************************************/
@@ -976,177 +973,128 @@ function showLeftTab(){
     //Start by checking to make sure the first tab is not hidden
     //Get the tab
     var currentTab=document.getElementById(tabs[0].id_name);
-    
     //If it is not hidden, there is nothing to do
     if(false==currentTab.classList.contains("hidden_tab")) return;
-    
     var i=1; //Index variable
     var showNewTab=false; //Flag to hold if a new tab needs to be displayed    
-    
     //Go through each tab
     while(i<tabs.length){
-   	 
-   	 //Get the current tab
-   	 currentTab=document.getElementById(tabs[i].id_name);
-   	 
-   	 
-   	 //If it does not have the hidden_tab class
-   	 if(false==currentTab.classList.contains("hidden_tab")){
-   		 
-   		 //Go back a tab
-   		 currentTab=document.getElementById(tabs[i-1].id_name);
-   		 //And remove the class hiding it
-   		 currentTab.classList.remove("hidden_tab");
-   		 
-   		 //Show the tab
-   		 //dialog_on_click(tabs[i-1].id_name);
-   		 
-   		 //And break out of the loop
-   		 break;
-   	 }
-   	 
-   	 i++
+        //Get the current tab
+        currentTab=document.getElementById(tabs[i].id_name);
+        //If it does not have the hidden_tab class
+        if(false==currentTab.classList.contains("hidden_tab")){
+            //Go back a tab
+            currentTab=document.getElementById(tabs[i-1].id_name);
+            //And remove the class hiding it
+            currentTab.classList.remove("hidden_tab");
+            //Show the tab
+            //dialog_on_click(tabs[i-1].id_name);
+            break;//And break out of the loop
+        }
+        i++;
     }
-    
     //console.log("Check1");
-    
     //Flag to hold whether or not a tab is viewable
     var visibilityFlag=true;
-    
     var lastVisible=-1; //Variable to hold where the last visible tab is
-    
     //Next, reapply the hidden_tab class to any now hidden tabs
     while(i<tabs.length){
-   	 //console.log(i+"/"+tabs.length);
-   	 
-   	 //Check to see if the tab is visible
-   	 visibilityFlag=checkTabVisibility(tabs[i].id_name);
-   	 
-   	 //If the current tab is not visible
-   	 if(false==visibilityFlag){
-   		 
-   		 //Check to see if it is the active tab
-   		 //(I.e. if the active tab is not visible)
-   		 if(tabs[i].tab_status){
-   			 showNewTab=true;
-   		 }
-   		 
-   		 //Update lastVisible if it  is still -1
-   		 if(-1===lastVisible) lastVisible=i-1;
-   		 
-   		 //Get the current tab
-   		 currentTab=document.getElementById(tabs[i].id_name);
-   		 
-   		 //And add the class to the tab for record keeping if needed
-   		 if(false===currentTab.classList.contains("hidden_tab")){
-   			 
-   			 //And add it to the tab for record keeping
-   			 currentTab.classList.add("hidden_tab");
-   		 }
-   		 
-   		 //And break out of the loop
-   		 //break;
-   	 }
-   	 
-   	 //Update i
-   	 i++;
+        //console.log(i+"/"+tabs.length);
+        //Check to see if the tab is visible
+        visibilityFlag=checkTabVisibility(tabs[i].id_name);
+        //If the current tab is not visible
+        if(false==visibilityFlag){
+            //Check to see if it is the active tab
+            //(I.e. if the active tab is not visible)
+            if(tabs[i].tab_status){
+                showNewTab=true;
+            }
+            //Update lastVisible if it  is still -1
+            if(-1===lastVisible) lastVisible=i-1;
+            //Get the current tab
+            currentTab=document.getElementById(tabs[i].id_name);
+            //And add the class to the tab for record keeping if needed
+            if(false===currentTab.classList.contains("hidden_tab")){
+                //And add it to the tab for record keeping
+                currentTab.classList.add("hidden_tab");
+            }
+            //And break out of the loop
+            //break;
+        }
+        //Update i
+        i++;
     }
-    
     //If needed, show a new tab
     if(showNewTab) dialog_on_click(tabs[lastVisible].id_name);
-    
 }
 /*****************************************************/
 //Function to navigate right in the tab bar
 function showRightTab(){
-    
     //Start by checking to make sure the last tab is not hidden
-    
     //Initialize i
     var i=tabs.length-1;
-    
     //console.log("i: "+i);
     //console.log("id: "+tabs[i].id_name);
     //Get the tab
     var current_tab=document.getElementById( tabs[i].id_name );
-    
     console.log("tabs[i]: "+JSON.stringify(tabs[i]));
     console.log("current_tab: "+JSON.stringify(current_tab));
     console.log("classList: "+current_tab.classList);
-    
     //If it is not hidden, there is nothing to do
     if(false==current_tab.classList.contains("hidden_tab")) return;
-    
     //Decrement i to avoid checking it again
     i--;
-    
     var showNewTab=false; //Flag to hold if a new tab needs to be displayed    
-    
     //While it is not at the start
     //I.e. go through each tab in reverse order
     while(i>=0){
-   	 
-   	 //Get the current tab
-   	 current_tab=document.getElementById(tabs[i].id_name);
-   	 
-   	 //If it does not have the hidden_tab class
-   	 if(false==current_tab.classList.contains("hidden_tab")){
-   		 
-   		 //Go to the next tab
-   		 current_tab=document.getElementById(tabs[i+1].id_name);
-   		 //And remove the class hiding it
-   		 current_tab.classList.remove("hidden_tab");    
-   		 current_tab.focus();
-   		 //Break out of the loop
-   		 break;
-   	 }
-   	 
-   	 //Decrease i to check the next tab
-   	 i--;
+        //Get the current tab
+        current_tab=document.getElementById(tabs[i].id_name);
+        
+        //If it does not have the hidden_tab class
+        if(false==current_tab.classList.contains("hidden_tab")){
+            //Go to the next tab
+            current_tab=document.getElementById(tabs[i+1].id_name);
+            //And remove the class hiding it
+            current_tab.classList.remove("hidden_tab");    
+            current_tab.focus();
+            break;//Break out of the loop
+        }
+        //Decrease i to check the next tab
+        i--;
     }
-    
     //The next will now show if there is room.
     //The next step is to then hide tabs on the left until there is room
-    
     var j=0; //Index variable
-    
     //While it is still not at the rightmost tab left
     while(j<tabs.length){
-   	 //Get the current tab
-   	 current_tab=document.getElementById(tabs[j].id_name);
-   	 
-   	 //And check if it is hidden (has the hidden_tab class)
-   	 //If not
-   	 if(false==current_tab.classList.contains("hidden_tab")){
-   		 
-   		 //Show the tab
-   		 //dialog_on_click(tabs[i-1].id_name);
-   		 
-   		 //And break out of the loop
-   		 break;
-   	 }
-   	 //Update the index
-   	 j++;
+        //Get the current tab
+        current_tab=document.getElementById(tabs[j].id_name);
+        
+        //And check if it is hidden (has the hidden_tab class)
+        //If not
+        if(false==current_tab.classList.contains("hidden_tab")){
+            //Show the tab
+            //dialog_on_click(tabs[i-1].id_name);
+            break;//And break out of the loop
+        }
+        //Update the index
+        j++;
     }
-    
-    //var lastVisible=i;
-    
     //While the desired tab is still not visible
     //And j does not go ut of bounds (i.e. try to hide tab[i+1])
     while(false==checkTabVisibility(tabs[i+1].id_name) && j<=i ){
-   	 //Get the leftmost visible tab
-   	 current_tab=document.getElementById(tabs[j].id_name)
-   	 
-   	 //If the current tab is the active one, activate the next one
-   	 if(tabs[j].tab_status){
-   		 //console.log("Making visible: "+tabs[j].id_name);
-   		 dialog_on_click(tabs[j+1].id_name);
-   	 }
-   	 //And hide the current tab
-   	 current_tab.classList.add("hidden_tab");
-   	 
-   	 //Go to the next tab
-   	 j++;
+        //Get the leftmost visible tab
+        current_tab=document.getElementById(tabs[j].id_name)
+        //If the current tab is the active one, activate the next one
+        if(tabs[j].tab_status){
+            //console.log("Making visible: "+tabs[j].id_name);
+            dialog_on_click(tabs[j+1].id_name);
+        }
+        //And hide the current tab
+        current_tab.classList.add("hidden_tab");
+        //Go to the next tab
+        j++;
     }
 }
 /*****************************************************/
@@ -1154,86 +1102,65 @@ function showRightTab(){
 function setTabButtons(){
     var hiddenTabs=[]; //Array to hold whether the tab was hidden or not
     var currentTab; //The current tab being processed
-    
     //Go through and record whether the tabs are hidden or not and unhide them
     for(var i=0;i<tabs.length;i++){
-   	 //Get the current tab
-   	 currentTab=document.getElementById(tabs[i].id_name);
-   	 
-   	 //Check if it is hidden
-   	 var check=currentTab.classList.contains("hidden_tab");
-   	 //Record whether or not it had the class
-   	 hiddenTabs.push(check);
-   	 //If it does have the class, remove it
-   	 if(check) currentTab.classList.remove("hidden_tab");
-   	 
+        //Get the current tab
+        currentTab=document.getElementById(tabs[i].id_name);
+        //Check if it is hidden
+        var check=currentTab.classList.contains("hidden_tab");
+        //Record whether or not it had the class
+        hiddenTabs.push(check);
+        //If it does have the class, remove it
+        if(check) currentTab.classList.remove("hidden_tab");
     }
-    
-    
     //Hide them and assume there is enough space
     var buttons=document.getElementById("leftTabButtons"); //Get the left side
     buttons.classList.add("hidden_tab"); //Hide it
-    
     buttons=document.getElementById("rightTabButtons");
     buttons.classList.add("hidden_tab");
-    
     var firstTabID=tabs[0].id_name;
     var firstFlag=checkTabVisibility(firstTabID);
-    
     //If the first tab is not visible, show the buttons and return
     if(false==firstFlag){
-   	 
-   	 //Go through and readd the hidden_tab class as needed
-   	 for(var i=0;i<tabs.length; i++){
-   		 //Get the tab
-   		 currentTab=document.getElementById(tabs[i].id_name);
-   		 //If it was previously marked as having the class, re add it
-   		 if(hiddenTabs[i]) currentTab.classList.add("hidden_tab");
-   	 }
-   	 
-   	 buttons=document.getElementById("leftTabButtons");
-   	 buttons.classList.remove("hidden_tab");
-   	 
-   	 buttons=document.getElementById("rightTabButtons");
-   	 buttons.classList.remove("hidden_tab");
-   	 
-   	 return;
+        //Go through and readd the hidden_tab class as needed
+        for(var i=0;i<tabs.length; i++){
+            //Get the tab
+            currentTab=document.getElementById(tabs[i].id_name);
+            //If it was previously marked as having the class, re add it
+            if(hiddenTabs[i]) currentTab.classList.add("hidden_tab");
+        }
+        buttons=document.getElementById("leftTabButtons");
+        buttons.classList.remove("hidden_tab");
+        buttons=document.getElementById("rightTabButtons");
+        buttons.classList.remove("hidden_tab");
+        return;
     }
-    
     var lastTabID=tabs[tabs.length-1].id_name;
     var lastFlag=checkTabVisibility(lastTabID);
-    
     //Repeat for the last tab
     if(false==lastFlag){
-   	 //Go through and readd the hidden_tab class as needed
-   	 for(var i=0;i<tabs.length;i++){
-   		 //Get the tab
-   		 currentTab=document.getElementById(tabs[i].id_name);
-   		 //If it was previously marked as having the class, re add it
-   		 if(hiddenTabs[i]) currentTab.classList.add("hidden_tab");
-   	 }
-   	 
-   	 buttons=document.getElementById("leftTabButtons");
-   	 buttons.classList.remove("hidden_tab");
-   	 
-   	 buttons=document.getElementById("rightTabButtons");
-   	 buttons.classList.remove("hidden_tab");
-   	 
-   	 return;
+        //Go through and readd the hidden_tab class as needed
+        for(var i=0;i<tabs.length;i++){
+            //Get the tab
+            currentTab=document.getElementById(tabs[i].id_name);
+            //If it was previously marked as having the class, re add it
+            if(hiddenTabs[i]) currentTab.classList.add("hidden_tab");
+        }
+        buttons=document.getElementById("leftTabButtons");
+        buttons.classList.remove("hidden_tab");
+        buttons=document.getElementById("rightTabButtons");
+        buttons.classList.remove("hidden_tab");
+        return;
     }
-    
     //dialog_on_click(tabs[i].id_name);
-    
 }
 /*****************************************************/
 //Function designed to show a new tab after one has been deleted
 function showAnotherTab(){
     //Start by checking to make sure the first tab is not hidden
-    
     //Get the first and last tab
     var firstTab=document.getElementById(tabs[0].id_name);
     var lastTab=document.getElementById(tabs[tabs.length-1].id_name);
-    
     //If the left most tab is hidden, show a tab on the left
     if(true==firstTab.classList.contains("hidden_tab")){
    	 showLeftTab();
@@ -1244,5 +1171,9 @@ function showAnotherTab(){
     //If both are visible, do nothing
 }
 /*****************************************************/
-
-
+function RemoveBad(strTemp) { 
+	console.log("Old: "+strTemp);
+    strTemp = strTemp.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,""); 
+	console.log("New: "+strTemp);
+    return strTemp;
+}
