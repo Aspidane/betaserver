@@ -1,50 +1,59 @@
-/*  Online version OCt/17 */
+/*  Online version Oct/30  */
+html{
+  	font-family: "lucida sans", times, serif;
+    /*background: url('spookyGif.gif') , url('back_moon.png') no-repeat center fixed;*/
+    background: url('spookyGif.gif')no-repeat left top, url('spookyGif2.gif') no-repeat center, url('back_moon.png') no-repeat left top;
+    background-color: black;
+    /*background-size: cover;    */
+}
 header{
 	display: block;
 	width:860px;
-	background: rgb(80,146,171);
-	//text-align: center;
-	height: 130px;
-	//padding: 4px;
+	height: 100px;
+	/*padding-top: 4px;*/
 	box-sizing: border-box;
 	/*margin: 1px;*/
 	float: both;
 	border-radius: 5px 5px 0px 0px ;
-
 }
 .myLOGO{
-	display: block-inline;
+   	border: 1px solid yellow;    
+    color: white;
+	display: block;
+    /*position:absolute;*/
 	float: left;
-	width:130px;
-	height: 130px;
-	/*border: 1px solid yellow;*/
+	height: 100px;
+	width: 130px;
+	border: 1px solid transparent;
 	box-sizing: border-box;
 }
 .myServer-name{
-	text-align: center;
-	display: block-inline;
+    display: block-inline;
 	float: left;
 	width: 600px;
-	height: 130px;
-	/*border: 1px solid yellow;*/
+	height: 100px;
+	/* border: 1px solid yellow; */
 	box-sizing: border-box;
 }
 header h1{
-	color: white;
+    text-align: center;
+	color: rgb(255,83,0); /*Orange*/
+    font-size: 200%;
 	font-family: "lucida sans", times, serif;
-	/* width: 300px; */
-	/*height: 100px;*/
+}
+header h1:after {
+    content: '- HALLOWEEN -';
 }
 body{
-    	font-family: "lucida sans", times, serif;
-    	float:both;
+   	font-family: "lucida sans", times, serif;
+   	float:both;
 }
 nav a{
-	display: block-inline;
+	/*display: block-inline;*/
+    display:none;
 	font-family: "lucida sans", times, serif;
-   padding: 5px;
+    padding: 5px;
 	/*padding-top: 5px;*/
-    
 	margin-left: 15px;
 	margin-top: 15px;
 	text-decoration: none;
@@ -58,25 +67,28 @@ nav a{
 	box-sizing: border-box;
 	width: 100px;
 	height: 40px;
-    
 }
 .Left{
+	text-align: center;    
+	color: rgb(210,210,100);
 	display: block-inline;
 	width: 130px;
 	height:500px;
-	background-color: rgb(166,155,198);
-	border: 1px solid transparent;
+	background-color: rgba(255,83,0,0.4);
+	/*border: 1px solid transparent;*/
 	float: left;
 	padding: 5px;
-	border-radius: 0px 0px 0px 5px ;
+    padding-top:75px;    
+	border-radius: 5px 0px 0px 5px ;
 	/*border-radius: 5px;*/
 	box-sizing: border-box;
     /*text-align:center;*/
+   	/*border: 1px solid rgb(210,210,100);*/
 }
 .global_content{
 	display: block-inline;
 	width:730px;
-	height: 600px;
+	height: 520px;
 	float: left;
 	/*margin: 1px;*/
 	box-sizing: border-box;
@@ -89,15 +101,17 @@ nav a{
 	font-size: 120%;
 /*	margin:1px;*/
 /*	padding: 2px;*/
-	background-color: rgb(120,104,168);
+	border-radius: 0px 5px 0px 0px ;
+	background-color: rgba(255,83,0,0.4);
 	box-sizing: border-box;
 	float: both;
 }
 .MyID{
+	color: rgb(210,210,100);    
 	display: block-inline;
 	float: left;
 	height: 35px;
-	width: 300px;
+	width: 400px;
 	font-size: 20x;
 	text-align: center;
 	padding:1%;
@@ -108,35 +122,41 @@ nav a{
 	font-size: 14px;
 	font-weight: bold;
 	display: block-inline;
-	border-left: 1px solid rgb(120,104,168);
+/* 	border-left: 1px solid rgb(120,104,168);
 	border-bottom: 1px solid rgb(120,104,168);
-	border-top: 1px solid rgb(120,104,168);
-	width: 77px;
-	height:21px;
-	float:left;
-	color: rgb(120,104,168);
+	border-top: 1px solid rgb(120,104,168); */
+	width: 80px;
+	height:25px;
+	float:right;
+	color: rgb(64,0,0);
 	background-color: white;
 	padding-top:2px;
 	padding-left:2px;
 	margin-top: 5px;
+	margin-right: 5px;  
+    box-sizing: border-box;
 }
 .Input-User{
 	display: block-inline;
 	font-size: 14px;    
 	width:116px;
-	height:21px;    
-	float: left;
-	border-right: 1px solid rgb(120,104,168);
+	height:25px;  
+	float: right;
+/* 	border-right: 1px solid rgb(120,104,168);
 	border-bottom: 1px solid rgb(120,104,168);
-	border-top: 1px solid rgb(120,104,168);
+	border-top: 1px solid rgb(120,104,168); */
 	margin-top: 5px;
+	margin-right: 5px;  
+    box-sizing: border-box;
 }
 .myUser-Button{
 	width: 99px;
 	height:25px;    
-	float: left;
+	float: right;
 	display: block-inline;
 	margin-top: 5px;
+	margin-right: 5px;    
+	box-sizing: border-box;    
 }
 .tabs-header{
 	display: block;
@@ -144,14 +164,18 @@ nav a{
 	height:35px;
 	color: white;
 	font-size: 120%;
-/*	margin:1px;*/
-/*	padding: 2px;*/
-	background-color: rgb(120,104,168);
-    overflow-x: auto;
-    overflow-y: hidden;
+	/*margin:1px;*/
+	/*padding: 2px;*/
+	background-color: rgba(255,83,0,0.4);
 	box-sizing: border-box;
 	float: both;
 }
+ .mytab_holder{
+    width:550px;
+	height:35px;    
+	box-sizing: border-box;
+    float: left;
+} 
 [class*='close-'] {
 	color: black;
 	font: 12px arial, sans-serif;
@@ -169,8 +193,8 @@ nav a{
   color:red;
 }
 .mytab {
-	background-color: rgba(255, 255, 255, .3);
-    color: green;
+	background-color: rgba(255, 255, 255,0.3);
+	color: rgb(64,0,0);   
     border-radius: 3px 10px 0px 0px ;
     font-size: 11px;
     padding-top: 5px;
@@ -178,24 +202,26 @@ nav a{
     float: left;
     height: 25px;
     margin-right: 3px;
+    /* margin-top:8px; */
     position: relative;
     /*width: 80px;*/
-    top: 10px;    
-    box-sizing: border-box;   
+    top:10px;
+    /*left:0; */
+    box-sizing: border-box; 
 }
 .mytab:hover {
-   	background-color: rgba(255, 255, 255, .6);
+   	background-color: rgba(255, 255, 255, .9);
 }
 .mytab: focus {
-   	background-color: rgba(255, 255, 255, .8);
+	background-color: rgba(255,83,0,0.5);
 }
 .mytab2 {
-   	background-color: rgba(255, 255, 255, .8);
+   	background-color: rgba(255, 255, 255, .6);
 }
 /* The Modal (background) */
 .modal {
-	color: black;
-	text-align: left;
+	color: rgb(210,210,100);
+	text-align: center;
 	display: block-inline; /* Hidden by default */
 	z-index: 1; /* Sit on top */
 	padding-top: 300px; /* Location of the box */
@@ -204,10 +230,11 @@ nav a{
 	width:600px; /* Full width */
 	height: 405px; /* Full height */
 	padding-left:3px;
+    padding-bottom: 4px;
 	overflow-y: scroll;
 	overflow-x: hidden:
-	background-color: white; /* Fallback color */
-	background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+	/*background-color: white; /* Fallback color */
+	background-color: rgba(182,182,159,0.2); /* Black w/ opacity */
 	float: Left;
 	box-sizing: border-box;
 	word-break: break-all;
@@ -216,13 +243,13 @@ nav a{
 	font-size: 14px;
 	font-weight: bold;
 	display: block-inline;
-	border-left: 1px solid rgb(120,104,168);
+/* 	border-left: 1px solid rgb(120,104,168);
 	border-bottom: 1px solid rgb(120,104,168);
-	border-top: 1px solid rgb(120,104,168);
+	border-top: 1px solid rgb(120,104,168); */
 	width: 80px;
 	height:25px;
 	float:left;
-	color: rgb(120,104,168);
+	color: rgb(64,0,0);
 	background-color: white;
 	padding :2px;
 	box-sizing: border-box;
@@ -238,22 +265,24 @@ nav a{
 	float: left;
 	font-size: 14px;    
 	height:25px;    
-	border-right: 1px solid rgb(120,104,168);
+/* 	border-right: 1px solid rgb(120,104,168);
 	border-bottom: 1px solid rgb(120,104,168);
-	border-top: 1px solid rgb(120,104,168);
+	border-top: 1px solid rgb(120,104,168); */
 	box-sizing: border-box;	 
 }
 .myUsers{
+	/*text-align: left;       */
+    padding-left:3px;
 	font-size: 14px;
 	font-weight: bold;
 	display: block-inline;
-	border-left: 1px solid rgb(120,104,168);
-	border-right: 1px solid rgb(120,104,168);
+/* 	border-left: 1px solid rgb(120,104,168);
+	border-right: 1px solid rgb(120,104,168); */
 	width: 130px;
 	height:25px;
 	float:left;
-	color: rgb(120,104,168);
-	background-color:rgba(0,0,0,0.2);;
+	color: rgb(64,0,0);
+	background-color: rgba(182,182,159,0.5); 
 	box-sizing: border-box;	 
 }
 .online-box{
@@ -264,13 +293,13 @@ nav a{
 	z-index: 1; /* Sit on top */
 	width:130px; /* Full width */
 	height: 380px; /* Full height */
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
-	background-color: white; /* Fallback color */
-	background-color: rgba(0,0,0,0.2); /* Black w/ opacity */
-	border-left: 1px solid rgb(120,104,168);
+	/*background-color: white; /* Fallback color */
+	background-color: rgba(182,182,159,0.5); /* Black w/ opacity */
+	/*border-left: 1px solid rgb(120,104,168);
 	border-bottom: 1px solid rgb(120,104,168);
-	border-right: 1px solid rgb(120,104,168);
+	border-right: 1px solid rgb(120,104,168);*/
 	box-sizing: border-box;	 
 }
 .Right{
@@ -284,13 +313,34 @@ nav a{
 	box-sizing: border-box;
 }
 .username{
-	color:blue;
+	color:rgb(64,0,0);
+    font-weight: bold;
 }
 .systemMsg{
-	color:red;
+    text-align: left;
+	color:rgb(64,0,0);
+    background-color: rgba(182,182,159,0.5);    
+    display: block;
+    width:500px;
+    margin-left: 35px;
+    padding: 10px;
+    box-sizing: border-box;
+	border: 1px solid black;   
+    /*padding-top:25px;*/
+    border-radius: 5px;      
 }
 .userMsg{
-	color:green;
+    text-align: left;
+    display: block;    
+    width:99%;
+    background-color: rgba(182,182,159,.7);
+	color:black;
+    padding: 5px;
+    margin-left: 2px;
+    box-sizing: border-box;
+	border: 1px solid rgb(210,210,100);   
+    /*padding-top:25px;*/
+    border-radius: 5px;  
 }
 .user_on {
 	color : black;
@@ -303,7 +353,7 @@ nav a{
 	cursor: pointer;
 }
 .user_on:hover {
-	background-color: rgba(166,155,198,0.5); /* Black w/ opacity */
+	background-color: rgba(255,83,0,0.3); /* Black w/ opacity */
 }
 .user_container {
 	display: inline-block;
@@ -325,60 +375,142 @@ nav a{
 	display: block;
 }
 .option_user_container div:hover  {
-	background-color: rgb(80,146,171);
+	background-color: rgba(255,83,0,0.7);
 }
 .my_chatroom {
 	background-color: rgba(255, 255, 255, .3);    
-	border-radius: 5px;      
+	border-radius: 3px;      
 	color : black;
 	white-space: nowrap;
 	width:110px;
 	height:40px;
 	padding: 10px;
 	display: inline-block;
-	border: 1px solid rgb(120,104,168);
+	border: 1px solid rgb(210,210,100);  
 	cursor: pointer;
     margin: 4px;
 	box-sizing: border-box;    
 }
 .my_chatroom:hover {
-	background-color: rgb(120,104,168); /* Black w/ opacity */
+	background-color: rgba(255,83,0,0.5); /* Black w/ opacity */
    /* color : red;*/
 }
 .show {
 	display:block;
 }
 .newMsg{
-    text-decoration: blink;
-    color : red;    
+    color: rgb(255,83,0);  
 }
 .my_time{
+    display:block-inline;
+	/*white-space: nowrap; */   
+    float:right;
   	font-size: 60%;  
-    color : blue;
-    background-color: rgba(255, 255, 255, .3);
-    padding:2x;
+    color : rgb(64,0,0);
+    background-color: rgba(255, 255, 255, .1);
+    padding:2px;
+    box-sizing: border-box;  
+    border-radius: 3px;
+    top: -5px;
+    height:17px;    
 }
 .my_day{
     display:none;
 }
 .my_time:hover  .my_day{
-    display:inline-block;
-    position : relative;
-    left: -60x;
+    display:block;
+    position : fixed;
+    top:600px;
+    left:280px;
+	/*min-width: 350px; */
+    /*margin-top:20px; */
+    height:17px;
+    /*padding-top: -10px;*/
+    float: left;
   	font-size: 8x;  
-    color : black;    
+    color : black;  
+    background-color: rgb(182,182,159); 
+    padding:2px;    
+    box-sizing: border-box;      
+    border-radius: 3px;    
 }
 .hidden_tab{
     display: none;
 }
 .leftTabs{
-    border-radius: 8px;
-    margin: .5%;
+    top: 10px;    
+    margin-top:8px;    
     float: left;
 }
+.my_left_tab_single{
+    float: left;    
+    display:block-inline;
+    width: 10px;
+    height:25px;
+    font-size: 8px;
+    margin : 0px;
+    padding: 0px; 
+    margin-top:2px;
+    text-align: center;
+}
+.my_left_tab_double{
+    float: left;    
+    display:block-inline;
+    width: 15px;
+    height:25px;    
+    margin : 0px;
+    padding: 0px; 
+    margin-top:2px;    
+    font-size: 8px;
+    text-align: center;
+}
+.my_right_tab_double{
+    float: left;     
+    display:block-inline;
+    width: 15px;
+    height:25px;
+    margin : 0px;
+    padding: 0px;
+    margin-top:2px;    
+    font-size: 8px;    
+    text-align: center;
+}
+.my_right_tab_single{
+    float: left; 
+    display:block-inline;
+    font-size: 8px;
+    width: 10px;
+    height:25px;
+    margin : 0px;
+    padding: 0px;
+    margin-top:2px;    
+    text-align: center;
+}
 .rightTabs{
-    border-radius: 8px;
-    margin: .5%;
-    float: right;
-    right: 0;
+    float: left;     
+    margin-top:8px; 
+    box-sizing: border-box;    
+}
+.my_footer{
+	box-sizing: border-box;
+	border-radius: 5px;    
+    position: fixed;
+    left:10px;
+    padding-top: 3px;
+    top: 630px;
+    background-color: rgba(182,182,159,0.5);
+    width: 860px;
+    height:50px;
+    font-size: 10px;
+    display:block;
+    float: both;
+    text-align: center;
+    color: rgb(182,182,159);
+}
+.my_corner{
+    
+	width: 130px;
+	height:25px;
+	float:left;
+	background-color: rgba(255,83,0,0.4);
 }
