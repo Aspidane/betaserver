@@ -1,7 +1,7 @@
 # betaserver
 
 
-This application [is on Heroku](https://betaserver.herokuapp.com/).
+This application [is hosted on Heroku](https://betaserver.herokuapp.com/).
 
 This is a chatserver run on Node.js. Features include:
 -Multiple chat rooms
@@ -16,8 +16,8 @@ Make sure you have [Node.js](http://nodejs.org/) installed. To run it, you simpl
 $ node betaapp.js
 ```
 
-The app should now be accessible from a browser on [localhost](http://localhost).
+The app should now be accessible via a browser using [localhost](http://localhost).
 
 ## Documentation
 
-This app uses teh Apache license.
+This app uses the Apache license.
