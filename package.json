@@ -11,7 +11,8 @@
   },
   "dependencies": {
 	"socket.io": "1.4.8",
-	"validator":"6.1.0"
+	"validator":"6.1.0",
+    "sanitize-html":"1.13.0"
   },
   "repository": {
     "type": "git",
