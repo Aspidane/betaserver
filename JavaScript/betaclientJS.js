@@ -1,5 +1,5 @@
 "use strict";
-// Online version Oct/30
+// Online version Nov/12
 var max_valor_msg=300;
 var max_valor_username=15;
 //Client's username. Will be updated when they connect to the server.
@@ -10,7 +10,7 @@ var public_chatrooms=[]; //list of names
 //var client_chatrooms=[]; //DEPRECATED list of objects CONTAINS all the chatroom names and users related that the USER has joined
  
 //Connect to the server via socket.io    --WARNING-- REMOVE 'http://localhost' if it goes to the online version
-/* var socket = io('http://localhost'); */
+// var socket = io('http://localhost'); 
 var socket = io();
 var btnadd_me = document.getElementById('add_me');   
 var tabs = [];
@@ -122,7 +122,7 @@ socket.on('messageFromServer', function (data) {
 	//3 is the response is a user leaves
 	} else if("3"==typeReceived){
         //io.sockets.emit("messageFromServer", {type:"3", room:publicRooms[j].name,time:timestamp,day:t_day,leaving_user:username,others:publicRooms[j].users});
-        index= finding_tab_byname(data["leaving_user"]);  // index for private msg tab  
+        var index= finding_tab_byname(data["leaving_user"]);  // index for private msg tab  
         console.log("indeice: "+index);
         if(index>=0){ //means we found a private msg tab
             write_in_chat(typeReceived,data);  //user disconected -warning- is not the same like closing tab
@@ -136,64 +136,53 @@ socket.on('messageFromServer', function (data) {
     	//Get the old and new names
     	var oldName=data["oldName"];
     	var newName=data["newName"];
-        //Searching for the username that was updated by chatrooms
-        for(var i=0; i<public_chatrooms.length;i++){
-            var index= finding_tab_byname(public_chatrooms[i]);
-            if(index >= 0){
-                data.room=public_chatrooms[i]; 
-                data.kind="public";
-                //reviso todos los usuarios del tab, cambio el nombre
-                var index_user= tabs[index].tab_users.indexOf(oldName);
-                if(index_user >= 0){
-                    console.log("found on PUBLIC msg");
-                    tabs[index].tab_users[index_user] =newName;
-                    write_in_chat(typeReceived,data);
-                    if (tabs[index].tab_status){   // if the room is the actual tab
-                        refresh_users_actualtab(index);
+        //searching through all the tabs
+        for(var i=0; i<tabs.length;i++){
+            var index_user= tabs[i].tab_users.indexOf(oldName); // we find out is the user that is changing his name is related to the tab
+                if(index_user >= 0){ // if is that the case then we proceed to change the names
+                    if(1==tabs[i].tab_kind){ //public room case 
+                        data.index=i;
+                        console.log("found on PUBLIC room");
+                        tabs[i].tab_users[index_user] =newName;
+                        write_in_chat(typeReceived,data);
+                        if (tabs[i].tab_status){   // if the tab is the actual tab
+                            refresh_users_actualtab(i);
+                        }
+                    }else if(2==tabs[i].tab_kind){ //private room case
+                        data.index=i;
+                        console.log("found on PRIVATE room");
+                        tabs[i].tab_users[index_user] =newName;
+                        write_in_chat(typeReceived,data);
+                        if(tabs[i].tab_name==oldName){ // means we need to change tab's label
+                            console.log('changing tab name');
+                            tabs[i].tab_name=tabs[i].tab_name.replace(oldName,newName);
+                            var refreshed_tab= document.getElementById(tabs[i].id_name).innerHTML;
+                            var replacing_nametab= refreshed_tab.replace(oldName,newName);
+                            document.getElementById(tabs[i].id_name).innerHTML= replacing_nametab;
+                            //Get the tab's ID number (e.g. Tab_2 will return 2)
+                            var id=tabs[i].id_name.substr(4);
+                            //And add the destroy functionality back to it
+                            var closing_x = document.getElementById("Cls_"+id);
+                            //Add the onclick listener with destroy_me_Click
+                            closing_x.addEventListener('click', destroy_me_Click);     
+                            if(username!=newName){ // WARNING this is if is not necessary, we should do the statments without asking
+                                //Update the width
+                                var privateTab=document.getElementById(tabs[i].id_name);
+                                //Setting the width to auto gets it the width it needs
+                                //for the text.
+                                privateTab.setAttribute("style","width: auto");
+                                //Now calculate the width as the 
+                                //current width (text width)+x button width+buffer space
+                                var width=privateTab.clientWidth+closing_x.clientWidth+5;
+                                privateTab.setAttribute("style","width:"+width+"px");
+                            }                           
+                        }
+                        if (tabs[i].tab_status){   // if the tab is the actual tab
+                            refresh_users_actualtab(i);
+                        }
                     }
                 }
-            }
-        }
-        //Searching for the username that was updated by private rooms
-         var index = finding_tab_byname(oldName);
-        /*console.log("tab for PM changing user name: "+ index);
-        console.log("old name:"+oldName);
-        console.log("tabname: "+tabs[index].tab_name); */
-        if(index >= 0){ //found a private msg with the user
-                data.kind="private";
-                console.log("found on private msg");
-                var index_user= tabs[index].tab_users.indexOf(oldName);
-                if(index_user >= 0){
-                    tabs[index].tab_users[index_user] =newName;
-                    write_in_chat(typeReceived,data);
-                    // refresco el user
-                    if (tabs[index].tab_status){   // if the room is the actual tab
-                        refresh_users_actualtab(index);
-                    }
-                    //and refresh the new name on the tab name as well
-                    tabs[index].tab_name=tabs[index].tab_name.replace(oldName,newName);
-                    var refreshed_tab= document.getElementById(tabs[index].id_name).innerHTML;
-                    var replacing_nametab= refreshed_tab.replace(oldName,newName);
-                    document.getElementById(tabs[index].id_name).innerHTML= replacing_nametab;
-                    //Get the tab's ID number (e.g. Tab_2 will return 2)
-                    var id=tabs[index].id_name.substr(4);
-                    //And add the destroy functionality back to it
-                    var closing_x = document.getElementById("Cls_"+id);
-                    //Add the onclick listener with destroy_me_Click
-                    closing_x.addEventListener('click', destroy_me_Click);     
-                    if(username!=newName){
-                        //Update the width
-                        var privateTab=document.getElementById(tabs[index].id_name);
-                        //Setting the width to auto gets it the width it needs
-                        //for the text.
-                        privateTab.setAttribute("style","width: auto");
-                        //Now calculate the width as the 
-                        //current width (text width)+x button width+buffer space
-                        var width=privateTab.clientWidth+closing_x.clientWidth+5;
-                        privateTab.setAttribute("style","width:"+width+"px");
-                    }   
-                }    
-        }
+        }//for i
  	//7 if user is leaving a chat-room
     }else if("7"==typeReceived){
         if(username!=data["name"]){
@@ -215,7 +204,7 @@ socket.on('newPrivateMessage', function (data) {
     if (username == data["sender"]){
         write_in_chat("6",data);
     }else{
-        //alert(data["sender"]+", "+data["recipient"]+", "+data["message"]);
+        console.log((data["sender"]+", "+data["recipient"]+", "+data["message"]));
         write_in_chat("5",data);   
         console.log("New private message");
         console.log(data["sender"]+" sent this user ("+data["recipient"]+") the following message: "+data["message"]);
@@ -290,7 +279,7 @@ function refreshUsers(data){
 //Refreshes the list of public chat rooms
 function refresh_rooms(){
     //Get the space where we'll display the chat rooms
-    var chatList=document.getElementById("chatrooms");
+    var chatList=document.getElementById("myChatRooms");
     console.log("Refreshing chatrooms");
     console.log("chatrooms:"+public_chatrooms);
     chatList.innerHTML="Chat-Rooms"; //Clear out the current list
@@ -373,7 +362,7 @@ function sendMessage(){
         	}
     	}    
         if(tab_name!=null){
-        	var recipient=finding_name(tab_name);
+        	var recipient=(tab_name);
             var room_flag = false; //Flag for whther or not a tab is a room
             //Check to see if it is a room
             for(var i=0;i<public_chatrooms.length;i++){
@@ -432,19 +421,15 @@ function finding_name(my_str) {
 /*****************************************************/   
 function finding_tab_byname(the_tab_name){
 	var pos = -1;
-	console.log("Tab name: "+the_tab_name);
+	console.log("WE looking for tab name: "+the_tab_name+"; position: "+pos);
 	for(var i=0;i<tabs.length;i++){    
-    	if(the_tab_name==public_chatrooms[i]){
-        	if (tabs[i].tab_name == the_tab_name){
-            	pos=i;
-            	break;
-        	}	 
-   	 }else if (finding_name(tabs[i].tab_name) == the_tab_name && the_tab_name!=username){
+        if (tabs[i].tab_name == the_tab_name){
             	pos=i;
             	break;
     	}
     }
-	return pos;
+	console.log("New position: "+pos);
+    return pos;
 }
 /*****************************************************/   
 function refreshing_modal(i){
@@ -482,25 +467,13 @@ function write_in_chat(type,data){
     	}
 	}else if(type=="4"){ // system msg: user changed name
         console.log("Changed name\n");
-        //updating all chat-rooms 
-        if(data.kind=="public"){
-            var tab_i = public_chatrooms.indexOf(data["room"]);
-            if(tab_i >= 0){
-                tabs[tab_i].tab_log += "<br /><span class='systemMsg'>"+data["oldName"]+" has changed their name to "+data["newName"]+add_date(data)+"</span>";
-                if (tabs[tab_i].tab_status== true){
-                    refreshing_modal(tab_i);
-                }
-            }
-        }else if(data.kind=="private") {
-            var tab_i= finding_tab_byname(data["oldName"]);
-            console.log("tab_i: "+tab_i);
-            if(tab_i>=0){ //updating private msg log
-                tabs[tab_i].tab_log += "<br /><span class='systemMsg'>"+data["oldName"]+" has changed their name to "+data["newName"]+add_date(data)+"</span>";
-                if (tabs[tab_i].tab_status== true){
-                    refreshing_modal(tab_i);
-                } else {
-                    document.getElementById(tabs[tab_i].id_name).classList.add("newMsg");
-                }   		 
+        var index = data["index"];        
+        if(index >= 0){
+            tabs[index].tab_log += "<br /><span class='systemMsg'>"+data["oldName"]+" has changed their name to "+data["newName"]+add_date(data)+"</span>";
+            if (tabs[index].tab_status== true){
+                refreshing_modal(index);
+            }else if(tabs[index].tab_kind== 2  && data["newName"]!=username){
+                document.getElementById(tabs[index].id_name).classList.add("newMsg");
             }
         }
 	}else if(type=="2"){ // system msg: new user connected
@@ -517,7 +490,7 @@ function write_in_chat(type,data){
         }
 	}else if(type=="5"){ // system msg: private msg
     	var tab_i= finding_tab_byname(data["sender"]);
-    	//alert(msg1 +" "+tab_i);   	 
+    	console.log("sender: "+data["sender"] +" in position:"+tab_i);   	 
     	if(tab_i>=0){ //updating private msg log
         	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+make_links(data["message"])+add_date(data)+"</span>";
         	if (tabs[tab_i].tab_status== true){
@@ -540,8 +513,8 @@ function write_in_chat(type,data){
     	tabs[tab_i].tab_log += "<br /><span class='userMsg'><span class='username'>"+data["sender"]+":</span>  "+make_links(data["message"])+add_date(data)+"</span>";
     	refreshing_modal(tab_i);   	 
 	}else if(type=="7" ){
-    	var tab_i= finding_tab_byname(data["name"]);    
-    	tabs[tab_i].tab_log += "<br /><span class='systemMsg'>"+data["name"]+" has left the room."+add_date(data)+"</span>";
+    	var tab_i= finding_tab_byname(data["room"]);    
+    	//tabs[tab_i].tab_log += "<br /><span class='systemMsg'>"+data["name"]+" has left the room."+add_date(data)+"</span>";
         if (tabs[tab_i].tab_status== true){
             refreshing_modal(tab_i);
         }        
@@ -718,7 +691,7 @@ function btn_add_me_Click(the_user_name){
 	if (!flag_tab){
     	tab_total_count+=1;
     	var new_tab = {
-        	tab_name : username+"_"+the_user_name,
+        	tab_name : the_user_name,
         	id_name : "Tab_"+tab_total_count,
         	clsx_name: "Cls_"+tab_total_count,
         	tab_log : "",
@@ -1107,7 +1080,7 @@ function setTabButtons(){
     //Go through and record whether the tabs are hidden or not and unhide them
     for(var i=0;i<tabs.length;i++){
         //Get the current tab
-        currentTab=document.getElementById(tabs[i].id_name);
+        currentTab=document.getElementById(tabs[i].id_name); 
         //Check if it is hidden
         var check=currentTab.classList.contains("hidden_tab");
         //Record whether or not it had the class
@@ -1156,7 +1129,7 @@ function setTabButtons(){
     }
     //dialog_on_click(tabs[i].id_name);
 }
-/*****************************************************/
+/*****************************************************/ 
 //Function designed to show a new tab after one has been deleted
 function showAnotherTab(){
     //Start by checking to make sure the first tab is not hidden
@@ -1178,4 +1151,10 @@ function RemoveBad(strTemp) {
     strTemp = strTemp.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,""); 
 	console.log("New: "+strTemp);
     return strTemp;
+}
+function make_tabs(){
+    for(var i=0;i<12;i++){
+        btn_add_me_Click("random_name_"+i);
+        
+    }
 }
