@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Online version Oct/30  -->
+<!-- Online version Nov/12  -->
 <html lang="en">
 <header>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -22,9 +22,13 @@
 	</aside>    
    
 </header>
-<!-- <body onload="make_tabs()"> -->
- <body> 
+<body onload="make_tabs()">
+<!--  <body> --> 
 	<aside class = "Left" id="chatrooms">
+    	<div id="leftTabButtons" class="leftTabs hidden_tab">
+                <button id="leftMostTabs" class = "my_left_tab_single" onclick="showLeftTab()"><</button>
+                <button id="leftTab" class = "my_left_tab_double" onclick="showLeftMostTabs()"><<</button>
+        </div>
     	<span id="myChatRooms">Chat-Rooms</span>
 	</aside>
 	<aside class="global_content">
@@ -44,12 +48,12 @@
         	</form>
     	</aside>
         <aside class="tabs-header" id="tab_bar">
-            <div id=leftTabButtons class="leftTabs hidden_tab" >
+<!--             <div id="leftTabButtons" class="leftTabs hidden_tab" >
                 <button id="leftTab" class = "my_left_tab_double" onclick="showLeftMostTabs()"><<</button>
                 <button id="leftMostTabs" class = "my_left_tab_single" onclick="showLeftTab()"><</button>
-            </div>
+            </div> -->
             <aside id="tab_holder" class="mytab_holder"></aside>
-            <div id=rightTabButtons class="rightTabs hidden_tab">
+            <div id="rightTabButtons" class="rightTabs hidden_tab">
                 <button id="rightTab" class = "my_right_tab_single" onclick="showRightTab()">></button>
                 <button id="rightMostTabs" class = "my_right_tab_double" onclick="showRightMostTabs()">>></button>
             </div>
