@@ -1,9 +1,35 @@
 console.log("Starting Server");
-// Online version Oct/30 
+// Online version Nov/12 
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
 var validator = require('validator');
+var sanitizeHtml = require('sanitize-html');
+
+//Set options for sanitizing
+//Whitelist <a> tags and the link, class, id, and target attributes
+var sanitizeHtmlOptions = {
+	allowedTags: ['a'],
+	allowedAttributes: {'a':['href', 'class', 'id', 'target'] }
+};
+//anchorme.js turns link text into html links 
+//abc.com -> <a href='abc.com' ... >abc.com</a>
+var anchorme = require('./JavaScript/anchorme.min.js');
+//Options to be used when creating links
+var anchormeOptions = {
+ //"anyAttribute":"anyValue" //Generic example
+ "attributes":{
+  "class":"messageLink",
+  "target":"_blank",
+ },
+ "html":true,
+ ips:true,
+ emails:true,
+ urls:true,
+ TLDs:20,
+ truncate:50,
+ defaultProtocol:"https://"
+};
 
 var users=[];       //List of users
 var socketIDs=[];   
@@ -188,6 +214,16 @@ function my_day(){
  return d.toString();
 }
 /*****************************************************/
+function formatMessage(message){
+	//First, create the links
+	var linkedMessage=anchorme.js(message, anchormeOptions);
+	
+	//Then escape the bad characters
+	var safeMessage=sanitizeHtml(linkedMessage, sanitizeHtmlOptions);
+	
+	return safeMessage;
+}
+/*****************************************************/
 //When a browser connects to the webpage
 io.on('connection', function (socket){
 	console.log("New connection");
@@ -265,7 +301,7 @@ io.on('connection', function (socket){
     	//socket.emit is for the current client only
         var t_day = my_day();
         var timestamp= my_hour();    
-		var safeMessage=validator.escape(data["message"]);
+		var safeMessage=formatMessage(data["message"]);
     	io.to(data["room"]).emit('messageFromServer', { type:"0", sender:username, message:safeMessage, time:timestamp, day:t_day, room:data["room"] });
 	});
 	/*****************************************************/
@@ -285,8 +321,13 @@ io.on('connection', function (socket){
 			console.log("Not successful: "+username+" -> "+data["updatedName"]);
         	//And send the response to the user
 			socket.emit('messageFromServer', {type:"1", result:"no", reason:"Invalid characters."} );
-		
-		//If no problems were found, continue on
+		//Ensure the name isn't the same as a public chat room
+        }else if( getPublicRoomNames().indexOf(data["updatedName"]) > -1 ){
+            //Report the result
+            console.log("Not successful: "+username+" -> "+data["updatedName"]);
+            //And send the response to the user
+            socket.emit('messageFromServer', {type:"1", result:"no", reason:"Please do not use names of chat rooms."} );
+        //If no problems were found, continue on
 		}else{
 			//Record the current username
 			var oldUsername=username;  
@@ -417,7 +458,7 @@ io.on('connection', function (socket){
         console.log(senderIndex);
         var originator=users[senderIndex].username;
         //The object to be sent to the client
-		var safeMessage=validator.escape(data["message"]);
+		var safeMessage=formatMessage(data["message"]);
         var responseObject={//Contains the private message and who the  sender/receiver are
         	recipient:receiver,
         	sender:originator,
