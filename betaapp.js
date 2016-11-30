@@ -1,5 +1,5 @@
 console.log("Starting Server");
-// Online version Nov/12 
+// Online version Nov/29 
 var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
@@ -98,66 +98,30 @@ function handler(req, res) {
             	res.end(jsData);
         	}
     	});
-	}else if(req.url.indexOf("back_moon.png")>-1){
-        console.log("background requested");
+       
+   
+     
+    }else if((req.url.indexOf(".png")>-1)||(req.url.indexOf(".ico")>-1)||(req.url.indexOf(".gif")>-1)){
+        var n= req.url.lastIndexOf("/");
+        var png_name=req.url.substr(n);
+        
+        console.log("------------------TESTING------------------");        
+        console.log(png_name+" requested");
+        console.log("------------------TESTING------------------");        
         //Read it to them
-        fs.readFile(__dirname + '/images/back_moon.png', function(bgErr, backgroundData){
+        fs.readFile(__dirname + '/images'+png_name, function(bgErr, backgroundData){
             //If there is an error, report it
             if(bgErr) {
-                console.log("ERROR LOADING IMAGE BACKGROUND: "+bgErr);
+                console.log("ERROR LOADING "+req.url+" : "+bgErr);
                 res.writeHead(500);
-                res.end('Error loading back_moon.png');
+                res.end('Error loading'+req.url);
             } else{
                 //Otherwise, send it to the client
                 res.writeHead(200);
                 res.end(backgroundData);
             }
-        });        
-    }else if(req.url.indexOf("spookyGif.gif")>-1){
-        console.log("SpookyGif.gif requested");
-        //Read it to them
-        fs.readFile(__dirname + '/images/spookyGif.gif', function(bgErr, backgroundData){
-            //If there is an error, report it
-            if(bgErr) {
-                console.log("ERROR LOADING spookyGif.gif: "+bgErr);
-                res.writeHead(500);
-                res.end('Error loading spookyGif.gif');
-            } else{
-                //Otherwise, send it to the client
-                res.writeHead(200);
-                res.end(backgroundData);
-            }
-        });     
-    }else if(req.url.indexOf("spookyGif2.gif")>-1){
-        console.log("SpookyGif2.gif requested");
-        //Read it to them
-        fs.readFile(__dirname + '/images/spookyGif2.gif', function(bgErr, backgroundData){
-            //If there is an error, report it
-            if(bgErr) {
-                console.log("ERROR LOADING spookyGif2.gif: "+bgErr);
-                res.writeHead(500);
-                res.end('Error loading spookyGif2.gif');
-            } else{
-                //Otherwise, send it to the client
-                res.writeHead(200);
-                res.end(backgroundData);
-            }
-        });      
-    }else if(req.url.indexOf("fb_icon.png")>-1){
-        console.log("SpookyGif2.gif requested");
-        //Read it to them
-        fs.readFile(__dirname + '/images/fb_icon.png', function(bgErr, backgroundData){
-            //If there is an error, report it
-            if(bgErr) {
-                console.log("ERROR LOADING fb_icon.png: "+bgErr);
-                res.writeHead(500);
-                res.end('Error loading fb_icon.png');
-            } else{
-                //Otherwise, send it to the client
-                res.writeHead(200);
-                res.end(backgroundData);
-            }
-        });          
+        });  
+   
 	//Default to giving them the client
 	} else { //fs.readFile(__dirname + '/../chatServerRossi/chat_index.html',
     	fs.readFile(__dirname + '/betaclient.html', function(err, data){
