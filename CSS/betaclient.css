@@ -1,10 +1,14 @@
-/*  Online version Nov/12  */
+/*  Online version Nov/29  */
 html{
   	font-family: "lucida sans", times, serif;
     /*background: url('spookyGif.gif') , url('back_moon.png') no-repeat center fixed;*/
     background: url('spookyGif.gif')no-repeat left top, url('spookyGif2.gif') no-repeat center, url('back_moon.png') no-repeat left top;
+
     background-color: black;
     /*background-size: cover;    */
+    
+        display: table;
+    margin: auto;
 }
 header{
 	display: block;
@@ -45,25 +49,12 @@ header h1:after {
     content: '- HALLOWEEN -';
 }
 body{
+
    	font-family: "lucida sans", times, serif;
-   	float:both;
+    display: table-cell;
+    vertical-align: middle;
 }
-.my_share{
-	/* background-color: rgba(255, 255, 255, .3);     */
-    background: url('fb_icon.png');
-/*         background-size:cover;
- */     
-	display: block-inline;
-    /* display:none; */
-	font-family: "lucida sans", times, serif;
-	text-decoration: none;
-	color: white;
-	float: left;
-	border-radius: 5px;  
-	box-sizing: border-box;
-	width: 32px;
-	height: 32px;
-}
+
 .Left{
 	text-align: center;    
 	color: rgb(210,210,100);
@@ -81,9 +72,7 @@ body{
     /*text-align:center;*/
    	/*border: 1px solid rgb(210,210,100);*/
 }
-.my_leftbutton_holder{ /**/
-    
-}
+
 .global_content{
 	display: block-inline;
 	width:730px;
@@ -337,6 +326,7 @@ body{
 	color:black;
     padding: 5px;
     margin-left: 2px;
+    margin-right:20px;
     box-sizing: border-box;
 	border: 1px solid rgb(210,210,100);   
     /*padding-top:25px;*/
@@ -420,13 +410,12 @@ body{
 .my_time:hover  .my_day{
     display:block;
     position : fixed;
-    top:600px;
-    left:280px;
+    top:595px;
+    float:right;
+    margin-left:-380px;
 	/*min-width: 350px; tab_headers*/
     /*margin-top:20px; */
     height:17px;
-    /*padding-top: -10px;*/
-    float: left;
   	font-size: 8x;  
     color : black;  
     background-color: rgb(182,182,159); 
@@ -438,13 +427,15 @@ body{
     display: none;
 }
 .leftTabs{
-    
-    width: 130px;
-    height: 100px;
+    display:block-inline;
     top: 0px;    
-  
+    width:130px;
+    height: 100px;    
     float: left;
-    box-sizing: border-box;      
+    box-sizing: border-box;    
+}
+.opacity_zero{
+    opacity:0;
 }
 .my_left_tab_single{
     float: right;    
@@ -498,24 +489,36 @@ body{
 .my_footer{
 	box-sizing: border-box;
 	border-radius: 5px;    
-    position: fixed;
-    left:10px;
     padding-top: 3px;
-    top: 630px;
     background-color: rgba(182,182,159,0.5);
     width: 860px;
     height:50px;
     font-size: 10px;
-    display:block;
-    float: both;
+    display: block;
+    float: inherit;
     text-align: center;
     color: rgb(182,182,159);
 }
 .my_corner{
-    
-	width: 130px;
+	width: 730px;
 	height:25px;
 	float:left;
 	background-color: rgba(255,83,0,0.4);
+    border-radius: 0px 0px 5px 0px ;
+}
+.my_share{
+	display: block-inline;
+	text-decoration: none;
+	color: white;
+	float: left;
+	border-radius: 5px;  
+	box-sizing: border-box;
+	width: 25px;
+	height: 25px;
+    margin-left:10px;
+    margin-top:-3px;
+}
+.testing{
+    color:invisible;
 }
 
