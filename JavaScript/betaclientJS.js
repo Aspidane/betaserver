@@ -1,5 +1,5 @@
 "use strict";
-// Online version Nov/12
+// Online version Nov/29
 var max_valor_msg=300;
 var max_valor_username=15;
 //Client's username. Will be updated when they connect to the server.
@@ -10,8 +10,8 @@ var public_chatrooms=[]; //list of names
 //var client_chatrooms=[]; //DEPRECATED list of objects CONTAINS all the chatroom names and users related that the USER has joined
  
 //Connect to the server via socket.io    --WARNING-- REMOVE 'http://localhost' if it goes to the online version
-// var socket = io('http://localhost'); 
-var socket = io();
+ var socket = io('http://localhost'); 
+//var socket = io();
 var btnadd_me = document.getElementById('add_me');   
 var tabs = [];
 var tab_total_count = 0;
@@ -627,7 +627,7 @@ function add_me_chatroom(chat_name, chat_users, chat_kind){
         	tab_name : chat_name,
         	id_name : "Tab_"+tab_total_count,
         	clsx_name: "Cls_"+tab_total_count,
-        	tab_log : "WELCOME to -MY CHAT- American Server! :)<br />"+"        ***   "+chat_name+" room   ***",
+        	tab_log : "WELCOME to -MY CHAT- American Server! :)<br />"+"        ***   "+chat_name+" room   ***<br /><br />",
             tab_kind: "1",// 1 means public chat room
             tab_users: chat_users,
         	tab_status : true
@@ -673,19 +673,21 @@ function before_add_me_Click(the_user_name){
     console.log(index);
     dialog_on_click(tabs[index].id_name); // adds the focus to the lastest created (or just the new one)
     //Show the new tab
-    showRightMostTabs();
+    moveToTab(the_user_name);
 }/*****************************************************/  	 
 function btn_add_me_Click(the_user_name){
 	//alert(the_user_name);
 	//first we must check that we dont have a priv. msg (or prev tab)
 	//with this person, if we dont, we created a tab and everything
 	var flag_tab = false;
-	for(var i=0;i<tabs.length;i++){    
-    	if (tabs[i].tab_name== username+"_"+the_user_name){
-        	var old_tab_id_name = tabs[i].id_name;
-        	//alert("already exists");
-        	flag_tab = true;
-        	break;
+	for(var i=0;i<tabs.length;i++){ 
+		//Check for a private message tab using either the new or old name format
+    	if (tabs[i].tab_name== username+"_"+the_user_name 
+			|| tabs[i].tab_name==the_user_name){
+				var old_tab_id_name = tabs[i].id_name;
+				//alert("already exists");
+				flag_tab = true;
+				break;
     	}
 	}
 	if (!flag_tab){
@@ -726,13 +728,13 @@ function btn_add_me_Click(the_user_name){
         if(tabs.length==1){ //means this is the only tab created, must to be focused
             dialog_on_click(new_tab.id_name); // adds the focus to the lastest created (or just the new one)
         }
+		//Check to see if there are too many tabs
+		setTabButtons();    
+		//Show the new tab
+		showRightMostTabs();
 	}else{
     	dialog_on_click(old_tab_id_name); // adds the focus to the tab that has the user we want to talk and was created before
 	}
-    //Check to see if there are too many tabs
-    setTabButtons();    
-    //Show the new tab
-    //showRightMostTabs();
 }    
 /*****************************************************/    
 function dialog_on_click(tab_id){
@@ -775,8 +777,30 @@ function join_chatroom(chat_name, chat_kind){
         socket.emit("newChatRoom", {user:username, room:chat_name,kind: chat_kind,password:""});
     }else{
     	dialog_on_click(tabs[index].id_name); // adds the focus to the tab 
+		moveToTab(tabs[index].tab_name); // displays the tab
     }
 } 
+/*****************************************************/
+//Returns the id of the first tab that is not hidden
+function getFirstVisibleTab(){
+	//The current tab being inspected
+	var current;
+	//Initialize the result to an error (that will hopefully be overwritten)
+	var result=-1;
+	//Go through all the tabs and check to see if it has the hidden_tab class
+	for(var i=0;i<tabs.length;i++){
+		//Get the tab
+		current=document.getElementById(tabs[i].id_name);
+		//if it does not contain the hidden_tab class
+		if(false == current.classList.contains("hidden_tab")){
+			result=tabs[i].id_name; //Override result with the what was found
+			console.log("Returning "+result);
+			break;
+		}
+	}
+	//Return an error if all tabs are hidden
+	return result;
+}
 /*****************************************************/
 function checkTabVisibility(tab_id){
     var tabHolder=document.getElementById("tab_holder");
@@ -794,35 +818,18 @@ function checkTabVisibility(tab_id){
         var bottom=tabBorders.bottom;
         var left=tabBorders.left;
         var right=tabBorders.right;
-        //leftTabButtons, rightTabButtons
-        //Get the borders for the buttons if visible
-        var leftButtons=document.getElementById("leftTabButtons");
-        var rightButtons=document.getElementById("rightTabButtons");
-/*         //If the left buttons are visible, adjust for it
-        if(false==leftButtons.classList.contains("hidden_tab")){
-            //Get the width of the buttons' div
-            var leftAdjust=leftButtons.offsetWidth;
-            //And adjust for it
-            left=left-leftAdjust-2;
-        }
-        //Do the same on the right side
-        //If the right buttons are visible, adjust for it
-        if(false==rightButtons.classList.contains("hidden_tab")){
-            //Get the width of the buttons' div
-            var rightAdjust=rightButtons.offsetWidth;
-            console.log("rightAdjust: "+rightAdjust);
-            console.log("rightAdjust2: "+rightButtons.clientWidth);
-            //Check to see if the right buttons are visible
-            //Get the border
-            var rightBorders=rightButtons.getBoundingClientRect();
-            var rightTop=tabBorders.top;
-            var rightBottom=rightTop+rightButtons.offsetWidth;
-            var rightLeft=tabBorders.left;
-            var rightRight=rightLeft+rightButtons.offsetWidth;
-            //And adjust for it
-            right=right+rightAdjust+10;
-        } */
-            
+		var firstVisibleId=getFirstVisibleTab();
+		var topTap=document.getElementById(firstVisibleId);
+		//Get it's dimensions
+		var topBorders=topTap.getBoundingClientRect();
+		//If the tops and bottoms don't match, the tab is not on the same line
+		console.log("Top: "+top+"\nTabtop: "+topBorders.top);
+		console.log("Top: "+bottom+"\nTabtop: "+topBorders.bottom);
+		if(top != topBorders.top || bottom != topBorders.bottom){
+			console.log("\nReturning false\n");
+			return false;
+		}
+		//console.log("First Visible: "+firstVisibleId);
         //Check to see if it is within the tab border
         if(top>=borders.top && left>=borders.left && bottom<=borders.bottom
             && right <=borders.right ){
@@ -830,6 +837,7 @@ function checkTabVisibility(tab_id){
             return true
         }
         //If it is not, false is returned
+		console.log("\nReturning false\n");
         return false;
     }
 }
@@ -1090,9 +1098,9 @@ function setTabButtons(){
     }
     //Hide them and assume there is enough space
     var buttons=document.getElementById("leftTabButtons"); //Get the left side
-    buttons.classList.add("hidden_tab"); //Hide it
+    buttons.classList.add("opacity_zero"); //Hide it
     buttons=document.getElementById("rightTabButtons");
-    buttons.classList.add("hidden_tab");
+    buttons.classList.add("opacity_zero");
     var firstTabID=tabs[0].id_name;
     var firstFlag=checkTabVisibility(firstTabID);
     //If the first tab is not visible, show the buttons and return
@@ -1105,9 +1113,9 @@ function setTabButtons(){
             if(hiddenTabs[i]) currentTab.classList.add("hidden_tab");
         }
         buttons=document.getElementById("leftTabButtons");
-        buttons.classList.remove("hidden_tab");
+        buttons.classList.remove("opacity_zero");
         buttons=document.getElementById("rightTabButtons");
-        buttons.classList.remove("hidden_tab");
+        buttons.classList.remove("opacity_zero");
         return;
     }
     var lastTabID=tabs[tabs.length-1].id_name;
@@ -1122,9 +1130,9 @@ function setTabButtons(){
             if(hiddenTabs[i]) currentTab.classList.add("hidden_tab");
         }
         buttons=document.getElementById("leftTabButtons");
-        buttons.classList.remove("hidden_tab");
+        buttons.classList.remove("opacity_zero");
         buttons=document.getElementById("rightTabButtons");
-        buttons.classList.remove("hidden_tab");
+        buttons.classList.remove("opacity_zero");
         return;
     }
     //dialog_on_click(tabs[i].id_name);
@@ -1146,15 +1154,63 @@ function showAnotherTab(){
     //If both are visible, do nothing
 }
 /*****************************************************/
+//Function to navigate left/right to show a specific tab 
+function moveToTab(tabName){
+	//console.log("Tab name to move to: "+tabName);
+	//Get the index of the desired tab
+	var index=finding_tab_byname(tabName);
+	//If it is an invalid tab, do nothing
+	if(-1==index) return;
+	var desiredTab=document.getElementById(tabs[index].id_name);
+	//If the desired tab is not hidden
+	if( false==desiredTab.classList.contains("hidden_tab") ){
+		//console.log("Not hidden!");
+		//No work needed
+		return;
+	}
+	var currentTab;
+	//Go through each tab until the currently shown tabs are reached
+	//Or the desired tab is reached 
+	for(var i=0; i<tabs.length;i++){
+		//console.log("Moving right");
+		currentTab=document.getElementById(tabs[i].id_name);
+		//If the desired tab is found before a visible tab is
+		if(tabs[i].tab_name==tabName){
+			//Show the next tab on the left until the desired tab is visible
+			while(desiredTab.classList.contains("hidden_tab")){
+				//Move left
+				//console.log("Moving left");
+				showLeftTab();
+			}
+			//Break out of the loop after finishing
+			break;
+		//If a visible tab is reached, then the desired tab comes later
+		} else if( false==currentTab.classList.contains("hidden_tab") ){
+			//console.log("Moving right");
+			//Show the next tab on the right until the desired tab is shown
+			//While the desired tab is still hidden
+			while(desiredTab.classList.contains("hidden_tab")){
+				//Move right
+				//console.log("Moving right");
+				showRightTab();
+			}
+			break;//Break out of the loop after finishing
+		}
+	}
+}
+/*****************************************************/
 function RemoveBad(strTemp) { 
 	console.log("Old: "+strTemp);
     strTemp = strTemp.replace(/\<|\>|\"|\'|\%|\;|\(|\)|\&|\+|\-/g,""); 
 	console.log("New: "+strTemp);
     return strTemp;
 }
+/*****************************************************/
+//Debugging function
 function make_tabs(){
     for(var i=0;i<12;i++){
         btn_add_me_Click("random_name_"+i);
         
     }
 }
+/*****************************************************/
