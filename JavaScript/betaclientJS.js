@@ -1,5 +1,5 @@
 "use strict";
-// Online version Nov/29
+// Online version Dec/9
 var max_valor_msg=300;
 var max_valor_username=15;
 //Client's username. Will be updated when they connect to the server.
@@ -204,9 +204,9 @@ socket.on('newPrivateMessage', function (data) {
     if (username == data["sender"]){
         write_in_chat("6",data);
     }else{
-        console.log((data["sender"]+", "+data["recipient"]+", "+data["message"]));
+        //console.log((data["sender"]+", "+data["recipient"]+", "+data["message"]));
         write_in_chat("5",data);   
-        console.log("New private message");
+        //console.log("New private message");
         console.log(data["sender"]+" sent this user ("+data["recipient"]+") the following message: "+data["message"]);
     }
 });
@@ -421,7 +421,7 @@ function finding_name(my_str) {
 /*****************************************************/   
 function finding_tab_byname(the_tab_name){
 	var pos = -1;
-	console.log("WE looking for tab name: "+the_tab_name+"; position: "+pos);
+	console.log("We looking for tab name: "+the_tab_name+"; position: "+pos);
 	for(var i=0;i<tabs.length;i++){    
         if (tabs[i].tab_name == the_tab_name){
             	pos=i;
@@ -627,7 +627,7 @@ function add_me_chatroom(chat_name, chat_users, chat_kind){
         	tab_name : chat_name,
         	id_name : "Tab_"+tab_total_count,
         	clsx_name: "Cls_"+tab_total_count,
-        	tab_log : "WELCOME to -MY CHAT- American Server! :)<br />"+"        ***   "+chat_name+" room   ***<br /><br />",
+        	tab_log : "Welcome to the Aspidane chat server! :)<br />"+"        ***   "+chat_name+" room   ***<br /><br />",
             tab_kind: "1",// 1 means public chat room
             tab_users: chat_users,
         	tab_status : true
@@ -673,6 +673,7 @@ function before_add_me_Click(the_user_name){
     console.log(index);
     dialog_on_click(tabs[index].id_name); // adds the focus to the lastest created (or just the new one)
     //Show the new tab
+	showRightMostTabs();
     moveToTab(the_user_name);
 }/*****************************************************/  	 
 function btn_add_me_Click(the_user_name){
@@ -727,12 +728,14 @@ function btn_add_me_Click(the_user_name){
 		tab.setAttribute("style","width:"+width+"px");
         if(tabs.length==1){ //means this is the only tab created, must to be focused
             dialog_on_click(new_tab.id_name); // adds the focus to the lastest created (or just the new one)
+			console.log("\n\nnew_tab.id_name: "+new_tab.id_name+"\n\n");
         }
 		//Check to see if there are too many tabs
 		setTabButtons();    
 		//Show the new tab
-		showRightMostTabs();
+		//showRightMostTabs();
 	}else{
+		console.log("\n\nold_tab_id_name: "+old_tab_id_name+"\n\n");
     	dialog_on_click(old_tab_id_name); // adds the focus to the tab that has the user we want to talk and was created before
 	}
 }    
@@ -794,7 +797,7 @@ function getFirstVisibleTab(){
 		//if it does not contain the hidden_tab class
 		if(false == current.classList.contains("hidden_tab")){
 			result=tabs[i].id_name; //Override result with the what was found
-			console.log("Returning "+result);
+			//console.log("Returning "+result);
 			break;
 		}
 	}
@@ -823,8 +826,8 @@ function checkTabVisibility(tab_id){
 		//Get it's dimensions
 		var topBorders=topTap.getBoundingClientRect();
 		//If the tops and bottoms don't match, the tab is not on the same line
-		console.log("Top: "+top+"\nTabtop: "+topBorders.top);
-		console.log("Top: "+bottom+"\nTabtop: "+topBorders.bottom);
+		//console.log("Top: "+top+"\nTabtop: "+topBorders.top);
+		//console.log("Top: "+bottom+"\nTabtop: "+topBorders.bottom);
 		if(top != topBorders.top || bottom != topBorders.bottom){
 			console.log("\nReturning false\n");
 			return false;
@@ -837,7 +840,7 @@ function checkTabVisibility(tab_id){
             return true
         }
         //If it is not, false is returned
-		console.log("\nReturning false\n");
+		//console.log("\nReturning false\n");
         return false;
     }
 }

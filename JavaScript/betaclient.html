@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- Online version Dec/9  -->
+<html lang="en">
+<header>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Aspidane Chat</title>
+    <link rel="shortcut icon" href="images/favicon.ico" />    
+	<link href="CSS/betaclient.css" rel="stylesheet" type="text/css">  
+	<script src="../../socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="JavaScript/betaclientJS.js"></script>
+	<script type="text/javascript" src="JavaScript/anchorme.min.js"></script>
+	<aside class="myLOGO">
+      <!--   <a class="my_share" target="_blank" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fbetaserver.herokuapp.com"></a>     -->
+	</aside>
+	<aside id="server-name" class="myServer-name">
+    	<h1 align="center"></h1>
+	</aside>    
+   
+</header>
+<!-- <body onload="make_tabs()"> -->
+<!--  <body>  -->
+<body>
+ 
+	<aside class = "Left" id="chatrooms">
+    	<span id="leftTabButtons" class="leftTabs opacity_zero">
+                <button id="leftMostTabs" class = "my_left_tab_single" onclick="showLeftTab()"><</button>
+                <button id="leftTab" class = "my_left_tab_double" onclick="showLeftMostTabs()"><<</button>
+        </span>
+        <span id="myChatRooms">Chat-Rooms</span>
+	</aside>
+	<aside class="global_content">
+    	<!-- The Chat HEADER -->
+    	<aside class="modal-header">
+        	<aside id="WuserID" class="MyID">Welcome User!</aside>
+        	<!--Update username form-->
+         	<form onsubmit="return false;">
+                 	<button id="nameBtn" class="myUser-Button" onclick="updateName()">UPDATE</button>               
+                	<input type="text" id="userid" class="Input-User" ></input>
+                	<label class="Label-User">Username: </label>                    
+
+         	</form>  
+        	<!--For debugging; adds tabs-->
+        	<!--<form action="/" method="post">-->
+   			 <!--<button type="button" id="add_me" onclick="btn_add_me_Click()">Agregar</button>-->
+        	</form>
+    	</aside>
+        <aside class="tabs-header" id="tab_bar">
+<!--             <div id="leftTabButtons" class="leftTabs hidden_tab" >
+                <button id="leftTab" class = "my_left_tab_double" onclick="showLeftMostTabs()"><<</button>
+                <button id="leftMostTabs" class = "my_left_tab_single" onclick="showLeftTab()"><</button>
+            </div> -->
+            <aside id="tab_holder" class="mytab_holder"></aside>
+            <div id="rightTabButtons" class="rightTabs opacity_zero">
+                <button id="rightTab" class = "my_right_tab_single" onclick="showRightTab()">></button>
+                <button id="rightMostTabs" class = "my_right_tab_double" onclick="showRightMostTabs()">>></button>
+            </div>
+    	</aside>        
+    	<!-- The Modal -->
+    	<div id="myModal" class="modal"></div>   
+    	<!-- Users box -->    	 
+    	<aside id="onlineSection" class="BOX-Users">
+        	<aside class="myUsers">Users:</aside>
+           	<aside id="onlineUsers" class="online-box"></aside>
+    	</aside>
+
+        <aside class="my_corner">
+            <form width:700px onsubmit="return false;">
+                <label class="Label-Msg">Message: </label>
+                <input type="text" id="userMessage"  class="Input-Msg"></input>
+                <button id="myBtn" class="myButton" onclick="sendMessage()">SEND</button>
+            </form>
+        </aside>   
+	</aside>
+    <aside class="testing">This website is only supported for Firefox, Opera and Chrome.<aside>
+</body>
+	<footer class="my_footer">
+        <span>Aspidane Chat Server 2016 V-1.0  Licence: Apache</span><br />
+        <span>Repository HTML/Java/CSS code in <a href="https://github.com/Aspidane/chatserver" target="_blank">Aspidane/chatserver</a>
+            <a title="Share us on Facebook" class="my_share"  background: url('facebook_25x25.png') target="_blank" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Fbetaserver.herokuapp.com"><img src='facebook_25x25.png'></a>    
+            <a title="Share us on Twitter" class="my_share" target="_blank" href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%2F&ref_src=twsrc%5Etfw&text=Aspidane%20Chat&tw_p=tweetbutton&url=https%3A%2F%2Fbetaserver.herokuapp.com%2F"><img src='twitter_25x25.png'  alt="tweet2"></a>
+        </span>
+        <span>Contact Address: <a texdecoration=none href="mailto:aspidane@gmail.com" >Aspidane@gmail.com</a></span>
+        <br /><span>Special thanks to: <a href="http://www.w3schools.com/default.asp" target="_blank">w3schools.com</a>, <a href="http://www.heroku.com/" target="_blank">Heroku.com</a>, and <a href="http://www.stackoverflow.com/" target="_blank">stackoverflow.com</a></span>
+	</footer> 	
+</html>
+
+
+
