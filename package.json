@@ -1,18 +1,18 @@
 {
   "name": "betaserver",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "BETA version of a simple Node.js chat server using socket.io",
   "engines": {
-    "node": "4.4.7"
+    "node": "16.14.0"
   },
   "main": "betaapp.js",
   "scripts": {
     "start": "node betaapp.js"
   },
   "dependencies": {
-	"socket.io": "1.4.8",
-	"validator":"6.1.0",
-    "sanitize-html":"1.13.0"
+	"socket.io": "4.5.4",
+	"validator":"13.7.0",
+    "sanitize-html":"2.8.0"
   },
   "repository": {
     "type": "git",
