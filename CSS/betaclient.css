@@ -2,7 +2,7 @@
 html{
   	font-family: "lucida sans", times, serif;
     /*background: url('spookyGif.gif') , url('back_moon.png') no-repeat center fixed;*/
-    background: url('spookyGif.gif')no-repeat left top, url('spookyGif2.gif') no-repeat center, url('back_moon.png') no-repeat left top;
+    background: url('images/spookyGif.gif')no-repeat left top, url('images/spookyGif2.gif') no-repeat center, url('images/back_moon.png') no-repeat left top;
 
     background-color: black;
     /*background-size: cover;    */
@@ -201,7 +201,7 @@ body{
 .mytab:hover {
    	background-color: rgba(255, 255, 255, .9);
 }
-.mytab: focus {
+.mytab:focus {
 	background-color: rgba(255,83,0,0.5);
 }
 .mytab2 {
@@ -221,7 +221,7 @@ body{
 	padding-left:3px;
     padding-bottom: 4px;
 	overflow-y: scroll;
-	overflow-x: hidden:
+	overflow-x: hidden;
 	/*background-color: white; /* Fallback color */
 	background-color: rgba(182,182,159,0.2); /* Black w/ opacity */
 	float: Left;
